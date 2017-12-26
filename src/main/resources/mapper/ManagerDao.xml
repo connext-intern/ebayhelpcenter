@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.connext.ebayhelpcenter.dao.ManagerDao">
+    <!-- 查询是否存在该二级菜单 -->
+    <select id="hasSecondMenu" resultType="boolean">
+        <![CDATA[ SELECT count(*) FROM ebay_second_menus WHERE second_id = #{secondId} ]]>
+    </select>
+
+    <!-- 删除该二级菜单 -->
+    <delete id="deleteSecondMenuInfo">
+        DELETE FROM ebay_second_menus WHERE second_id = #{secondId}
+    </delete>
+
+    <!-- 查询一级菜单下是否存在二级菜单 -->
+    <select id="firstHasSecondMenus" resultType="boolean">
+        <![CDATA[ SELECT count(*) FROM ebay_second_menus WHERE second_first_id = #{firstId} ]]>
+    </select>
+</mapper>
