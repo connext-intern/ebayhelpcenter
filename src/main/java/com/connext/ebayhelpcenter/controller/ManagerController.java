@@ -23,43 +23,11 @@ public class ManagerController {
     @Autowired
     private ManagerService managerService;
 
-    /*
-        删除一级标题，需判断是否存在二级标题
-        @Param("firstId") 一级菜单id
-     */
-    @RequestMapping("/deleteFirstMenu")
+    @RequestMapping("test")
     @ResponseBody
-    public String deleteFirstMenu(@RequestParam("firstId") String firstId){
-        log.info("ManagerController is deleteFirstMenu start...");
-        log.info("firstId-->{}",firstId);
-
-        //删除一级菜单
-        Boolean  isDeleteFirstMenu = this.managerService.deleteFirstMenu(firstId);
-        //。。。。。。未完成
-
-        return "index";
-    }
-
-    /*
-       删除二级标题对象
-       @Param("secondId") 二级菜单id
-    */
-    @RequestMapping("/deleteSecondMenu")
-    @ResponseBody
-    public String deleteSecondMenu(@RequestParam("secondId") String secondId){
-        log.info("ManagerController is deleteSecondMenu start...");
-        log.info("secondId-->{}",secondId);
-
-        Boolean isDeleteSecondMenu = this.managerService.deleteSecondMenu(secondId);
-        log.info("删除二级菜单对象-->"+isDeleteSecondMenu);
-
-        if(isDeleteSecondMenu){
-            log.info("deleteSecondMenu success");
-            return "deleteSecondMenuSuccess";
-        }else{
-            log.info("deleteSecondMenu fail");
-            return "deleteSecondMenuFail";
-        }
+    public String test(){
+        log.info("test");
+        return "success";
     }
 
 
