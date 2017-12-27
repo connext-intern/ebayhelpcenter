@@ -3,6 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.connext.ebayhelpcenter.dao.ManagerDao">
+<<<<<<< c41e6016299d0c4964e6e8b5d52ca401595e544f
     <resultMap id="ebayFirstMenus" type="com.connext.ebayhelpcenter.model.EbayFirstMenus">
         <id column="first_id" property="firstId"/>
         <result property="firstTitle" column="first_title"/>
@@ -31,4 +32,30 @@
     <select id="queryContent" resultType="com.connext.ebayhelpcenter.model.EbaySecondMenus">
         select second_title,content from ebay_second_menus where second_id=#{VALUE}
     </select>
+
+    <!-- 查询是否存在该二级菜单 -->
+    <select id="hasSecondMenu" resultType="boolean">
+        <![CDATA[ SELECT count(*) FROM ebay_second_menus WHERE second_id = #{secondId} ]]>
+    </select>
+
+    <!-- 删除该二级菜单 -->
+    <delete id="deleteSecondMenuInfo">
+        DELETE FROM ebay_second_menus WHERE second_id = #{secondId}
+    </delete>
+
+    <!-- 查询一级菜单下是否存在二级菜单 -->
+    <select id="firstHasSecondMenus" resultType="boolean">
+        <![CDATA[ SELECT count(*) FROM ebay_second_menus WHERE second_first_id = #{firstId} ]]>
+    </select>
+
+    <!-- 删除一级菜单下的所有二级菜单信息 -->
+    <delete id="deleteSecondMenusInfoFromFirst">
+        DELETE FROM ebay_second_menus WHERE second_first_id = #{firstId}
+    </delete>
+
+    <!-- 删除一级菜单 -->
+    <delete id="deleteFirstMenuInfo">
+        DELETE from ebay_first_menus WHERE first_id = #{firstId}
+    </delete>
+
 </mapper>
