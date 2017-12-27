@@ -1,6 +1,7 @@
 package com.connext.ebayhelpcenter.controller;
 
 import com.connext.ebayhelpcenter.model.EbayFirstMenus;
+import com.connext.ebayhelpcenter.model.EbaySecondMenus;
 import com.connext.ebayhelpcenter.service.ManagerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,6 +40,22 @@ public class ManagerController {
     public List<EbayFirstMenus> listAllTitle() {
         List<EbayFirstMenus> list = managerService.listAllTitle();
         return list;
+    }
+    @RequestMapping("/bb")
+    @ResponseBody
+    public List<EbaySecondMenus> queryKeyWords(String keyword){
+        log.info("keyword-->"+keyword);
+        List<EbaySecondMenus> list = this.managerService.queryKeyWords(keyword);
+        for(EbaySecondMenus e:list){
+            log.info(e.getContent());
+        }
+        return list;
+    }
+    @RequestMapping("/cc")
+    @ResponseBody
+    public  EbaySecondMenus queryContent(int secondId){
+        EbaySecondMenus ebaySecondMenus = this.managerService.queryContent(secondId);
+        return  ebaySecondMenus;
     }
 
 }
