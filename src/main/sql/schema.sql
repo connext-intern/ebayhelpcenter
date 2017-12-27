@@ -1,6 +1,8 @@
 -- 数据库
 CREATE DATABASE IF NOT EXISTS ebayhelpcenter DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
 
+USE ebayhelpcenter;
+
 -- 一级菜单表
 create table ebay_first_menus(
   first_id int not null auto_increment comment '一级菜单主键',
