@@ -3,5 +3,26 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.connext.ebayhelpcenter.dao.ManagerDao">
-
+    <resultMap id="ebayFirstMenus" type="com.connext.ebayhelpcenter.model.EbayFirstMenus">
+        <id column="first_id" property="firstId"/>
+        <result property="firstTitle" column="first_title"/>
+        <result property="firstSerial" column="first_serial"/>
+        <collection property="secondMenuses" ofType="com.connext.ebayhelpcenter.model.EbaySecondMenus">
+            <id column="second_id" property="secondId" javaType="int" jdbcType="INTEGER"/>
+            <result column="second_title" property="secondTitle" javaType="string" jdbcType="VARCHAR"/>
+            <result column="second_serial" property="secondSerial" javaType="int" jdbcType="INTEGER"/>
+            <result column="content" property="content" javaType="string" jdbcType="LONGVARCHAR"/>
+            <result column="html" property="html" javaType="string" jdbcType="LONGVARCHAR"/>
+            <result column="second_first_id" property="secondFirstId" javaType="int" jdbcType="INTEGER"/>
+        </collection>
+    </resultMap>
+    <select id="queryAll" resultType="com.connext.ebayhelpcenter.model.EbayFirstMenus">
+        SELECT first_title FROM ebay_first_menus
+    </select>
+    <select id="listAllTitle" resultMap="ebayFirstMenus">
+        SELECT f.first_id,s.second_id,f.first_title,s.second_title
+        FROM ebay_first_menus f left join ebay_second_menus s
+        ON  f.first_id=s.second_first_id
+        ORDER BY f.first_serial,s.second_serial
+    </select>
 </mapper>

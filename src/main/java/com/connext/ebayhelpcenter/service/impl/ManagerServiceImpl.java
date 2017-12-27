@@ -18,4 +18,8 @@ public class ManagerServiceImpl implements ManagerService {
     @Autowired
     private ManagerDao managerDao;
 
+    @Override
+    public List<EbayFirstMenus> listAllTitle() {
+        return managerDao.listAllTitle();
+    }
 }

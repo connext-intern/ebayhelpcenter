@@ -1,9 +1,12 @@
 package com.connext.ebayhelpcenter.model;
 
+import java.util.List;
+
 public class EbayFirstMenus {
     private int firstId;
     private int firstSerial;
     private String firstTitle;
+    private List<EbaySecondMenus> secondMenuses;
 
     public int getFirstId() {
         return firstId;
@@ -27,5 +30,13 @@ public class EbayFirstMenus {
 
     public void setFirstTitle(String firstTitle) {
         this.firstTitle = firstTitle;
+    }
+
+    public List<EbaySecondMenus> getSecondMenuses() {
+        return secondMenuses;
+    }
+
+    public void setSecondMenuses(List<EbaySecondMenus> secondMenuses) {
+        this.secondMenuses = secondMenuses;
     }
 }
