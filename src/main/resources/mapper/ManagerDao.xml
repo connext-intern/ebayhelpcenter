@@ -57,4 +57,28 @@
         DELETE from ebay_first_menus WHERE first_id = #{firstId}
     </delete>
 
+    <!--增加一级菜单-->
+    <update id="newFirstMenus" parameterType="com.connext.ebayhelpcenter.model.EbayFirstMenus">
+        INSERT INTO ebay_first_menus (first_serial,first_title)
+        VALUES
+        ((SELECT max_serial FROM
+        (SELECT MAX(first_serial) AS max_serial FROM ebay_first_menus ) t2)+1,
+        #{ebayFirstMenus.firstTitle});
+    </update>
+
+    <!--增加二级菜单及其内容-->
+    <update id="newSecondMenus" parameterType="com.connext.ebayhelpcenter.model.EbaySecondMenus">
+        INSERT INTO ebay_second_menus(second_serial,second_title,content,html,second_first_id)
+        VALUES
+        ((SELECT max_serial FROM
+        (SELECT MAX(second_serial) AS max_serial FROM ebay_second_menus ) t2)+1,
+        #{ebaySecondMenus.secondTitle},#{ebaySecondMenus.content},#{ebaySecondMenus.html},
+        #{ebaySecondMenus.secondFirstId});
+    </update>
+
+    <!--新增二级菜单时判断一级菜单是否还存在-->
+    <select id="hasFirstMenus" parameterType="int" resultType="boolean">
+        <![CDATA[ SELECT count(*) FROM ebay_first_menus WHERE first_id = #{secondFirstId} ]]>
+    </select>
+
 </mapper>

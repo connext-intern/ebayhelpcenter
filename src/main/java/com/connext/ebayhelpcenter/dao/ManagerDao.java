@@ -61,4 +61,22 @@ public interface ManagerDao {
      */
     @Transactional
     Boolean deleteFirstMenuInfo(@Param("firstId") int firstId);
+
+    /**
+     * 增加一级菜单
+     * @param ebayFirstMenus
+     */
+    void newFirstMenus(@Param("ebayFirstMenus") EbayFirstMenus ebayFirstMenus);
+
+    /**
+     * 增加二级菜单及其内容
+     * @param ebaySecondMenus
+     */
+    void newSecondMenus(@Param("ebaySecondMenus") EbaySecondMenus ebaySecondMenus);
+
+    /**
+     * 新增二级菜单时判断一级菜单是否还存在
+     * @param secondFirstId
+     */
+    Boolean hasFirstMenus(@Param("secondFirstId") int secondFirstId);
 }

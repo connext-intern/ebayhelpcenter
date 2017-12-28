@@ -36,4 +36,19 @@ public interface ManagerService {
         删除二级菜单
      */
     Boolean deleteSecondMenu(int secondId);
+
+    /**
+     * 增加一级菜单
+     * @param firstTitle 菜单标题
+     */
+    void newFirstMenus(String firstTitle);
+
+    /**
+     * 增加二级菜单及其内容
+     * @param secondTitle 菜单标题
+     * @param content 纯文本内容
+     * @param html 内容的html
+     * @param secondFirstId 对应一级菜单的编号
+     */
+    Boolean newSecondMenus(String secondTitle,String content,String html,int secondFirstId);
 }

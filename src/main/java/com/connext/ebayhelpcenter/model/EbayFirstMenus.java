@@ -8,6 +8,16 @@ public class EbayFirstMenus {
     private String firstTitle;
     private List<EbaySecondMenus> secondMenuses;//一级菜单对应的二级菜单
 
+    @Override
+    public String toString() {
+        return "EbayFirstMenus{" +
+                "firstId=" + firstId +
+                ", firstSerial=" + firstSerial +
+                ", firstTitle='" + firstTitle + '\'' +
+                ", secondMenuses=" + secondMenuses +
+                '}';
+    }
+
     public int getFirstId() {
         return firstId;
     }

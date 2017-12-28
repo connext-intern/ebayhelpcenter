@@ -100,4 +100,29 @@ public class ManagerServiceImpl implements ManagerService {
             return false;
         }
     }
+
+    @Override
+    public void newFirstMenus(String firstTitle) {
+        EbayFirstMenus ebayFirstMenus = new EbayFirstMenus();
+        ebayFirstMenus.setFirstTitle(firstTitle);
+        managerDao.newFirstMenus(ebayFirstMenus);
+    }
+
+    @Override
+    public Boolean newSecondMenus(String secondTitle, String content, String html, int secondFirstId) {
+        EbaySecondMenus ebaySecondMenus = new EbaySecondMenus();
+        ebaySecondMenus.setSecondTitle(secondTitle);
+        ebaySecondMenus.setContent(content);
+        ebaySecondMenus.setHtml(html);
+        ebaySecondMenus.setSecondFirstId(secondFirstId);
+
+        if (managerDao.hasFirstMenus(secondFirstId)){
+            managerDao.newSecondMenus(ebaySecondMenus);
+            return true;
+        }else {
+            return false;
+        }
+
+
+    }
 }

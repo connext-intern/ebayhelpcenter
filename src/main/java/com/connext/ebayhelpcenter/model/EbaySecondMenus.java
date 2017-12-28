@@ -8,6 +8,18 @@ public class EbaySecondMenus {
     private String html;
     private int secondFirstId;
 
+    @Override
+    public String toString() {
+        return "EbaySecondMenus{" +
+                "secondId=" + secondId +
+                ", secondSerial=" + secondSerial +
+                ", secondTitle='" + secondTitle + '\'' +
+                ", content='" + content + '\'' +
+                ", html='" + html + '\'' +
+                ", secondFirstId=" + secondFirstId +
+                '}';
+    }
+
     public int getSecondId() {
         return secondId;
     }

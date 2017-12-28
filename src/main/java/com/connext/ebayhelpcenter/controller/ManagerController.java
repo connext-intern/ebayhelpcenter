@@ -100,4 +100,34 @@ public class ManagerController {
         }
     }
 
+    /**
+     * 新增一级菜单
+     * @param firstTitle 菜单标题
+     * @return
+     */
+    @RequestMapping(value = "newFirstMenus", method = RequestMethod.POST)
+    @ResponseBody
+    public String newFirstMenus(String firstTitle){
+        managerService.newFirstMenus(firstTitle);
+        return "ok";
+    }
+
+    /**
+     * 新增二级标题及其内容
+     * @param secondTitle 菜单标题
+     * @param content 纯文本内容
+     * @param html 内容的html
+     * @param secondFirstId 对应一级菜单的编号
+     * @return
+     */
+    @RequestMapping(value = "newSecondMenus", method = RequestMethod.POST)
+    @ResponseBody
+    public String newSecondMenus(String secondTitle, String content, String html, int secondFirstId){
+        Boolean isNewSecondMenus = managerService.newSecondMenus(secondTitle,content,html,secondFirstId);
+        if(isNewSecondMenus){
+            return "newSecondMenusSuccess";
+        }
+        return "newSecondMenusFail";
+
+    }
 }
