@@ -27,9 +27,9 @@ public class ManagerController {
     private ManagerService managerService;
 
     /**
-     * @return 将二级菜单的标题封装到一级菜单中，返回一级菜单的list
+     * @return 将二级菜单封装到一级菜单中，返回一级菜单的list
      */
-    @RequestMapping(value = "/listAllTitle", method = RequestMethod.GET)
+    @RequestMapping(value = "/listAllMenus", method = RequestMethod.GET)
     @ResponseBody
     public List<EbayFirstMenus> listAllTitle() {
         List<EbayFirstMenus> list = managerService.listAllTitle();

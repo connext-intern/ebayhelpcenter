@@ -3,7 +3,6 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.connext.ebayhelpcenter.dao.ManagerDao">
-<<<<<<< c41e6016299d0c4964e6e8b5d52ca401595e544f
     <resultMap id="ebayFirstMenus" type="com.connext.ebayhelpcenter.model.EbayFirstMenus">
         <id column="first_id" property="firstId"/>
         <result property="firstTitle" column="first_title"/>

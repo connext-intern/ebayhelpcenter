@@ -12,7 +12,7 @@ import java.util.List;
 public interface ManagerDao {
     /**
      *
-     * @return 查询出所有的一级和二级标题，并按照序列号排序
+     * @return 查询出所有的一级和二级菜单，并按照序列号排序
      */
     public List<EbayFirstMenus> listAllTitle();
     /**
