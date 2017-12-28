@@ -141,7 +141,9 @@
     <update id="updateSecondHtml" parameterType="com.connext.ebayhelpcenter.model.EbaySecondMenus">
         UPDATE ebay_second_menus SET second_serial = #{second_serial} WHERE second_id = #{id}
     </update>
-
-
-
+    
+    <select id="findFirstSerial" resultType="com.connext.ebayhelpcenter.model.EbayFirstMenus">
+        SELECT * FROM ebay_first_menus
+        WHERE first_serial=#{firstSerial}
+    </select>
 </mapper>

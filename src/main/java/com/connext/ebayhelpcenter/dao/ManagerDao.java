@@ -144,4 +144,10 @@ public interface ManagerDao {
      *
      */
     void updateSecondSerial(@Param("id")int id,@Param("second_serial")int second_serial);
+    /**
+     * 查找是否含有一级菜单的id
+     * @param firstSerial
+     * @return
+     */
+    String findFirstSerial(@Param("firstSerial")int firstSerial);
 }

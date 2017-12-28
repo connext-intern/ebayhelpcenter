@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.*;
 
@@ -168,7 +167,7 @@ public class ManagerController {
     /**
      * 修改一级菜单标题
      */
-    @RequestMapping(value = "updateFirst",method = RequestMethod.PUT)
+    @RequestMapping(value = "updateFirst")
     @ResponseBody
     public String updateFirst(Integer firstSerial,String firstTitle,HttpServletRequest request){
         managerService.updateFirst(firstSerial,firstTitle);
@@ -180,11 +179,11 @@ public class ManagerController {
      * 查询所有一级菜单标题
      * @return
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "showAllFirst",method = RequestMethod.GET)
     @ResponseBody
-    public String showAllFirst(){
+    public List<EbayFirstMenus> showAllFirst(){
         List<EbayFirstMenus> ebayFirstMenu = managerService.showAllFirst();
-        return "success";
+        return ebayFirstMenu;
     }
 
   

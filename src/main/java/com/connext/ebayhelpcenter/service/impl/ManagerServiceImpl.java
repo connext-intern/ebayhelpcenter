@@ -167,7 +167,20 @@ public class ManagerServiceImpl implements ManagerService {
      */
     @Override
     public void updateFirst(int firstSerial, String title) {
-        managerDao.updateFirst(firstSerial,title);
+        String hasFirstSerial = managerDao.findFirstSerial(firstSerial);
+        if (hasFirstSerial!=null){
+            if (title == null){
+                log.info("标题不得为空");
+            }
+            else {
+                managerDao.updateFirst(firstSerial,title);
+            }
+        }
+        else {
+            log.info("没有找到输入id所对应的一级菜单");
+        }
+
+
     }
 
     /**
