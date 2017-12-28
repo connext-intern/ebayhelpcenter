@@ -209,4 +209,17 @@ public class ManagerController {
         return list;
     }
 
+    /**
+     * 修改二级菜单标题和内容
+     */
+    @RequestMapping(value = "updateSecond",method = RequestMethod.PUT)
+    @ResponseBody
+    public String updateSecond(Integer id,String title,String content,String html,Integer serial,HttpServletRequest request){
+        managerService.updateSecondTitle(id,title);
+        managerService.updateSecondContent(id,content);
+        managerService.updateSecondHtml(id,html);
+        managerService.updateSecondSerial(id,serial);
+        return "success to update";
+    }
+
 }

@@ -41,7 +41,7 @@ public class ManagerServiceImpl implements ManagerService {
         //1.判断一级菜单下是否存在二级菜单
         Boolean isFirstHasSecondMenus = this.managerDao.firstHasSecondMenus(firstId);
         if(isFirstHasSecondMenus){
-            log.info("该一级菜单下存在二级菜单,准备删除二级菜单和一级菜单");
+
 
             Boolean b1 = this.managerDao.deleteSecondMenusInfoFromFirst(firstId);
             Boolean b2 = this.managerDao.deleteFirstMenuInfo(firstId);

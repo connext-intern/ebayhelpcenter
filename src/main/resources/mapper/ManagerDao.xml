@@ -137,4 +137,11 @@
         UPDATE ebay_second_menus SET html = #{html} WHERE second_id = #{id}
     </update>
 
+    <!-- 根据second_id修改二级标题对应的序号 -->
+    <update id="updateSecondHtml" parameterType="com.connext.ebayhelpcenter.model.EbaySecondMenus">
+        UPDATE ebay_second_menus SET second_serial = #{second_serial} WHERE second_id = #{id}
+    </update>
+
+
+
 </mapper>
