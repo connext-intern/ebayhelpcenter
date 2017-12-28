@@ -14,19 +14,7 @@ public interface ManagerService {
      * @return 查询出所有的一级二级菜单，并按照序列号排序
      */
     public List<EbayFirstMenus> listAllTitle();
-<<<<<<< 04010e835fc8d1152d50b88af9088afe56cd58e6
-    /**
-     * 根据用户输入的关键字查询
-     * @param keyword
-     * @return
-     */
-    public List<EbaySecondMenus> queryKeyWords(String keyword);
-    /**
-     * 根据标题查询内容
-     * @param secondId
-     * @return
-     */
-    public EbaySecondMenus queryContent(int secondId);
+
 
     /*
        删除一级标题
@@ -77,7 +65,48 @@ public interface ManagerService {
      *修改一级菜单标题
      */
     void updateFirst(int firstSerial,String title);
-=======
 
->>>>>>> keywords
+
+    /**
+     *
+     *通过second_first_id查询二级标题
+     *
+     */
+    List<EbaySecondMenus> findContentById(Integer id);
+
+    /**
+     *
+     *通过second_id查询二级标题对应的内容
+     *
+     */
+    List<EbaySecondMenus>findTitleById(Integer id);
+
+    /**
+     *
+     *通过id编辑二级菜单的标题
+     *
+     */
+    void  updateSecondTitle(Integer id,String title);
+
+    /**
+     *
+     *通过id编辑二级菜单的内容
+     *
+     */
+    void updateSecondContent(Integer id,String content);
+
+    /**
+     *
+     *通过id编辑二级菜单的html
+     *
+     */
+    void updateSecondHtml(Integer id,String html);
+
+    /**
+     *
+     *通过id编辑二级菜单的排序号
+     *
+     */
+    void updateSecondSerial(Integer id,Integer second_serial);
+
 }

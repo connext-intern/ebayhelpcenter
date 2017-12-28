@@ -31,11 +31,7 @@ public class ManagerServiceImpl implements ManagerService {
         return managerDao.listAllTitle();
     }
 
-<<<<<<< 04010e835fc8d1152d50b88af9088afe56cd58e6
-    @Override
-    public EbaySecondMenus queryContent(int secondId) {
-        return this.managerDao.queryContent(secondId);
-    }
+
 
     @Override
     public Boolean deleteFirstMenu(int firstId) {
@@ -173,6 +169,65 @@ public class ManagerServiceImpl implements ManagerService {
     public void updateFirst(int firstSerial, String title) {
         managerDao.updateFirst(firstSerial,title);
     }
-=======
->>>>>>> keywords
+
+    /**
+     *
+     *通过second_first_id查询二级标题
+     *
+     */
+    @Override
+    public List<EbaySecondMenus> findContentById(Integer id) {
+        return managerDao.findContentById(id);
+    }
+
+    /**
+     *
+     *通过second_id查询二级标题对应的内容
+     *
+     */
+    @Override
+    public List<EbaySecondMenus> findTitleById(Integer id) {
+        return managerDao.findTitleById(id);
+    }
+
+    /**
+     *
+     *通过id编辑二级菜单的标题
+     *
+     */
+    @Override
+    public void updateSecondTitle(Integer id,String title) {
+        managerDao.updateSecondTitle(id,title);
+    }
+
+    /**
+     *
+     *通过id编辑二级菜单的内容
+     *
+     */
+    @Override
+    public void updateSecondContent(Integer id,String content) {
+        managerDao.updateSecondContent(id,content);
+    }
+
+    /**
+     *
+     *通过id编辑二级菜单的html
+     *
+     */
+    @Override
+    public void updateSecondHtml(Integer id,String html) {
+        managerDao.updateSecondHtml(id,html);
+    }
+
+    /**
+     *
+     *通过id编辑二级菜单的排序号
+     *
+     */
+    @Override
+    public void updateSecondSerial(Integer id,Integer second_serial) {
+        managerDao.updateSecondSerial(id,second_serial);
+    }
+
 }

@@ -1,4 +1,4 @@
-package com.connext.ebayhelpcenter.controller;
+﻿package com.connext.ebayhelpcenter.controller;
 
 import com.connext.ebayhelpcenter.model.EbayFirstMenus;
 import com.connext.ebayhelpcenter.model.EbaySecondMenus;
@@ -186,4 +186,27 @@ public class ManagerController {
         List<EbayFirstMenus> ebayFirstMenu = managerService.showAllFirst();
         return "success";
     }
+
+  
+
+    /**
+     *  通过一级菜单的id（second_first_id）查询二级菜单对应的标题
+     */
+    @RequestMapping("listSecondTitle")
+    @ResponseBody
+    public List<EbaySecondMenus> listSecondTitle(int id) {
+        List<EbaySecondMenus> list = managerService.findTitleById(id);
+        return list;
+    }
+
+    /**
+     *  通过二级菜单的id（second_id）查询二级菜单对应的内容
+     */
+    @RequestMapping("listSecondContent")
+    @ResponseBody
+    public List<EbaySecondMenus> listSecondContent(int id) {
+        List<EbaySecondMenus> list = managerService.findContentById(id);
+        return list;
+    }
+
 }

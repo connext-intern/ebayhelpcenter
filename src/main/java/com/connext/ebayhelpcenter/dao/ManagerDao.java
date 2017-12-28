@@ -102,4 +102,46 @@ public interface ManagerDao {
      * 修改标题
      */
     void updateFirst(@Param("firstSerial")int firstSerial,@Param("firstTitle")String title);
+
+    /**
+     *
+     *通过second_first_id查询二级标题
+     *
+     */
+    List<EbaySecondMenus>findTitleById(int id);
+
+    /**
+     *
+     *通过second_id查询二级标题对应的内容
+     *
+     */
+    List<EbaySecondMenus> findContentById(int id);
+
+    /**
+     *
+     *通过id编辑二级菜单的标题
+     *
+     */
+    void  updateSecondTitle(@Param("id") int id,@Param("title") String title);
+
+    /**
+     *
+     *通过id编辑二级菜单的内容
+     *
+     */
+    void updateSecondContent(@Param("id")int id,@Param("content")String content);
+
+    /**
+     *
+     *通过id编辑二级菜单的html
+     *
+     */
+    void updateSecondHtml(@Param("id")int id,@Param("html")String html);
+
+    /**
+     *
+     *通过id编辑二级菜单的排序号
+     *
+     */
+    void updateSecondSerial(@Param("id")int id,@Param("second_serial")int second_serial);
 }
