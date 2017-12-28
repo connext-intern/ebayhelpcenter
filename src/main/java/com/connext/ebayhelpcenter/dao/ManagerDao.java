@@ -103,4 +103,15 @@ public interface ManagerDao {
      * @param ebaySecondMenus
      */
     void updateSecondSerialByID(EbaySecondMenus ebaySecondMenus);
+
+    /**
+     * 查找一级菜单的标题
+     * @return
+     */
+    List<EbayFirstMenus> showAllFirst();
+
+    /**
+     * 修改标题
+     */
+    void updateFirst(@Param("firstSerial")int firstSerial,@Param("firstTitle")String title);
 }

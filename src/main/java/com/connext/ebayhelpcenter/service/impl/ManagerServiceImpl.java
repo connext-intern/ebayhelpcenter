@@ -162,4 +162,23 @@ public class ManagerServiceImpl implements ManagerService {
             i++;
         }
     }
+
+    /**
+     * 查找所有一级菜单的标题
+     * @return
+     */
+    @Override
+    public List<EbayFirstMenus> showAllFirst() {
+        return managerDao.showAllFirst();
+    }
+
+    /**
+     * 修改一级标题
+     * @param firstSerial
+     * @param title
+     */
+    @Override
+    public void updateFirst(int firstSerial, String title) {
+        managerDao.updateFirst(firstSerial,title);
+    }
 }

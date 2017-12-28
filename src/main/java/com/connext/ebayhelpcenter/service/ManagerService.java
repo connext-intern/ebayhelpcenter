@@ -65,4 +65,15 @@ public interface ManagerService {
      * @param secondSerials
      */
     void sortSecondTitle(Integer firstId, Integer[] secondSerials);
+
+    /**
+     * 查找一级菜单的所有内容
+     * @return
+     */
+    List<EbayFirstMenus> showAllFirst();
+
+    /**
+     *修改一级菜单标题
+     */
+    void updateFirst(int firstSerial,String title);
 }

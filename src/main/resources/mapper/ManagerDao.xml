@@ -112,4 +112,13 @@
         </set>
         WHERE second_id = #{secondId,jdbcType=INTEGER}
     </update>
+    <!-- 查找一级菜单标题 zhangyang -->
+    <select id="showAllFirst" resultType="com.connext.ebayhelpcenter.model.EbayFirstMenus">
+        SELECT * FROM ebay_first_menus
+    </select>
+    <!-- 根据serialid修改标题 -->
+    <update id="updateFirst" parameterType="com.connext.ebayhelpcenter.model.EbayFirstMenus">
+        UPDATE ebay_first_menus SET first_title =#{firstTitle}
+        WHERE first_serial = #{firstSerial}
+    </update>
 </mapper>

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /*
@@ -182,6 +183,28 @@ public class ManagerController {
         Integer[] secondSerials = {1,2,3,5,6,7,4};
         log.info("传进来的二级菜单们的一级菜单id和新的序列分别是：{},{}",firstId,secondSerials);
         managerService.sortSecondTitle(firstId,secondSerials);
+        return "success";
+    }
+
+    /**
+     * 修改一级菜单标题
+     */
+    @RequestMapping(value = "updateFirst",method = RequestMethod.PUT)
+    @ResponseBody
+    public String updateFirst(Integer firstSerial,String firstTitle,HttpServletRequest request){
+        managerService.updateFirst(firstSerial,firstTitle);
+        return "success to update";
+    }
+
+
+    /**
+     * 查询所有一级菜单标题
+     * @return
+     */
+    @RequestMapping(method = RequestMethod.GET)
+    @ResponseBody
+    public String showAllFirst(){
+        List<EbayFirstMenus> ebayFirstMenu = managerService.showAllFirst();
         return "success";
     }
 }
