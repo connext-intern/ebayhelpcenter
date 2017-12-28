@@ -116,13 +116,50 @@ public class ManagerServiceImpl implements ManagerService {
         ebaySecondMenus.setHtml(html);
         ebaySecondMenus.setSecondFirstId(secondFirstId);
 
-        if (managerDao.hasFirstMenus(secondFirstId)){
+        if (managerDao.hasFirstMenus(secondFirstId)) {
             managerDao.newSecondMenus(ebaySecondMenus);
             return true;
-        }else {
+        } else {
             return false;
         }
+    }
 
+        /**
+         *  对一级菜单进行排序的方法
+         *  By Zach Zhang
+         *  @Param firstSerials
+         */
+        @Override
+        public void sortFirstTitle(Integer[] firstSerials) {
+            //先按序列号排序查出所有的一级菜单
+            List<EbayFirstMenus> ebayFirstMenuses = managerDao.listAllFirstTitle();
+            int i=0;
+            //使用for循环更新序列号
+            for(EbayFirstMenus ebayFirstMenus:ebayFirstMenuses) {
+                ebayFirstMenus.setFirstSerial(firstSerials[i]);
+                log.info(ebayFirstMenus.toString());
+                managerDao.updateFirstSerialByID(ebayFirstMenus);
+                i++;
+            }
+        }
 
+    /**
+     * 对二级菜单进行排序
+     * By Zach Zhang
+     * @param firstId
+     * @param secondSerials
+     */
+    @Override
+    public void sortSecondTitle(Integer firstId, Integer[] secondSerials) {
+        //先根据一级id查出所有的二级菜单（按原来的序列号排序）
+        List<EbaySecondMenus> ebaySecondMenuses = managerDao.listAllSencondTitleByFirstId(firstId);
+        int i=0;
+        //使用for循环更新序列号
+        for(EbaySecondMenus ebaySecondMenus:ebaySecondMenuses) {
+            ebaySecondMenus.setSecondSerial(secondSerials[i]);
+            log.info(ebaySecondMenus.toString());
+            managerDao.updateSecondSerialByID(ebaySecondMenus);
+            i++;
+        }
     }
 }

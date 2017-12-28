@@ -51,4 +51,18 @@ public interface ManagerService {
      * @param secondFirstId 对应一级菜单的编号
      */
     Boolean newSecondMenus(String secondTitle,String content,String html,int secondFirstId);
+    /**
+     * 对一级菜单进行排序
+     * By Zach Zhang
+     * @param firstSerials
+     */
+    void sortFirstTitle(Integer[] firstSerials);
+
+    /**
+     * 对二级菜单进行排序
+     * By Zach Zhang
+     * @param firstId
+     * @param secondSerials
+     */
+    void sortSecondTitle(Integer firstId, Integer[] secondSerials);
 }

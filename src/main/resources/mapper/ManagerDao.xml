@@ -3,6 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.connext.ebayhelpcenter.dao.ManagerDao">
+
     <resultMap id="ebayFirstMenus" type="com.connext.ebayhelpcenter.model.EbayFirstMenus">
         <id column="first_id" property="firstId"/>
         <result property="firstTitle" column="first_title"/>
@@ -16,8 +17,18 @@
             <result column="second_first_id" property="secondFirstId" javaType="int" jdbcType="INTEGER"/>
         </collection>
     </resultMap>
-    <select id="queryAll" resultType="com.connext.ebayhelpcenter.model.EbayFirstMenus">
-        SELECT first_title FROM ebay_first_menus
+    <!-- 查出所有的一级菜单 by Zach zhang -->
+    <select id="listAllFirstTitle" resultType="com.connext.ebayhelpcenter.model.EbayFirstMenus">
+        SELECT first_id,first_serial,first_title
+        FROM ebay_first_menus
+        ORDER BY first_serial
+    </select>
+    <!-- 根据一级id查出所有的二级菜单 by Zach zhang -->
+    <select id="listAllSencondTitleByFirstId" resultType="com.connext.ebayhelpcenter.model.EbaySecondMenus" parameterType="Integer">
+        SELECT second_id,second_serial,second_title
+        FROM ebay_second_menus
+        WHERE second_first_id = #{firstId,jdbcType=INTEGER}
+        ORDER BY second_serial
     </select>
     <select id="listAllTitle" resultMap="ebayFirstMenus">
         SELECT f.first_id,s.second_id,f.first_title,s.second_title
@@ -81,4 +92,24 @@
         <![CDATA[ SELECT count(*) FROM ebay_first_menus WHERE first_id = #{secondFirstId} ]]>
     </select>
 
+    <!-- 根据主键更新一级菜单的序列号 By ZachZhang -->
+    <update id="updateFirstSerialByID" parameterType="com.connext.ebayhelpcenter.model.EbayFirstMenus">
+        UPDATE ebay_first_menus
+        <set>
+            <if test="firstSerial!= null">
+                first_serial = #{firstSerial,jdbcType=INTEGER}
+            </if>
+        </set>
+        WHERE first_id = #{firstId,jdbcType=INTEGER}
+    </update>
+    <!-- 根据主键更新二级菜单的序列号 By ZachZhang -->
+    <update id="updateSecondSerialByID" parameterType="com.connext.ebayhelpcenter.model.EbaySecondMenus">
+        UPDATE ebay_second_menus
+        <set>
+            <if test="secondSerial!= null">
+                second_serial = #{secondSerial,jdbcType=INTEGER}
+            </if>
+        </set>
+        WHERE second_id = #{secondId,jdbcType=INTEGER}
+    </update>
 </mapper>

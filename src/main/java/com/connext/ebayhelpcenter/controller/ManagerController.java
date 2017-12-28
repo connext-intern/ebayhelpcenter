@@ -122,12 +122,66 @@ public class ManagerController {
      */
     @RequestMapping(value = "newSecondMenus", method = RequestMethod.POST)
     @ResponseBody
-    public String newSecondMenus(String secondTitle, String content, String html, int secondFirstId){
-        Boolean isNewSecondMenus = managerService.newSecondMenus(secondTitle,content,html,secondFirstId);
-        if(isNewSecondMenus){
+    public String newSecondMenus(String secondTitle, String content, String html, int secondFirstId) {
+        Boolean isNewSecondMenus = managerService.newSecondMenus(secondTitle, content, html, secondFirstId);
+        if (isNewSecondMenus) {
             return "newSecondMenusSuccess";
         }
         return "newSecondMenusFail";
+    }
+    /**
+     * 给一级菜单进行排序
+     * ByZach Zhang
+     * @param firstSerials
+     * @return
+     */
+    @RequestMapping("/sortFirstTitle/{firstSerials}")
+    @ResponseBody
+    public String sortFirstTitle(@PathVariable("firstSerials") Integer[] firstSerials){
+        log.info("传进来的新序列是：{}",firstSerials);
+        managerService.sortFirstTitle(firstSerials);
+        return "success";
+    }
+    /**
+     * 给二级菜单进行排序
+     * ByZach Zhang
+     * @param secondSerials,firstId
+     * @return
+     */
+    @RequestMapping("/sortSecondTitle/{firstId}/{secondSerials}")
+    @ResponseBody
+    public String sortSecondTitle(@PathVariable("firstId") Integer firstId,@PathVariable("secondSerials") Integer[] secondSerials){
+        log.info("传进来的二级菜单们的一级菜单id和新的序列分别是：{},{}",firstId,secondSerials);
+        managerService.sortSecondTitle(firstId,secondSerials);
+        return "success";
+    }
 
+    /**
+     * 给一级菜单进行排序测试
+     * By Zach Zhang
+     * @return
+     */
+    @RequestMapping("/sortFirstTitleTest")
+    @ResponseBody
+    public String sortFirstTitleTest(){
+        //此处写死一个数组进行测试，
+        Integer[] firstSerials={2,1,4,3,5,6};
+        log.info("传进来的新序列是：{}",firstSerials);
+        managerService.sortFirstTitle(firstSerials);
+        return "success";
+    }
+    /**
+     * 给二级菜单进行排序测试
+     * ByZach Zhang
+     * @return
+     */
+    @RequestMapping("/sortSecondTitleTest")
+    @ResponseBody
+    public String sortSecondTitleTest(){
+        int firstId = 2;
+        Integer[] secondSerials = {1,2,3,5,6,7,4};
+        log.info("传进来的二级菜单们的一级菜单id和新的序列分别是：{},{}",firstId,secondSerials);
+        managerService.sortSecondTitle(firstId,secondSerials);
+        return "success";
     }
 }

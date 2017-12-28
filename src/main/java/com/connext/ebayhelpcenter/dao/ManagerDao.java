@@ -79,4 +79,28 @@ public interface ManagerDao {
      * @param secondFirstId
      */
     Boolean hasFirstMenus(@Param("secondFirstId") int secondFirstId);
+    /**
+     * 查出所有的一级菜单zhangchi
+     * @return
+     */
+    List<EbayFirstMenus> listAllFirstTitle();
+
+    /**
+     * 根据主键更新一级菜单的序列号zhangchi
+     * @param ebayFirstMenus
+     */
+    void updateFirstSerialByID(EbayFirstMenus ebayFirstMenus);
+
+    /**
+     * 查处所有的二级菜单 张弛
+     * @param firstId
+     * @return
+     */
+    List<EbaySecondMenus> listAllSencondTitleByFirstId(Integer firstId);
+
+    /**
+     * 根据主键更新二级菜单的序列号zhangchi
+     * @param ebaySecondMenus
+     */
+    void updateSecondSerialByID(EbaySecondMenus ebaySecondMenus);
 }
