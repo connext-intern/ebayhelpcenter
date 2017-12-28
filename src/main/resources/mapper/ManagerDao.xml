@@ -36,6 +36,7 @@
         ON  f.first_id=s.second_first_id
         ORDER BY f.first_serial,s.second_serial
     </select>
+<<<<<<< 04010e835fc8d1152d50b88af9088afe56cd58e6
     <select id="queryKeyWords" parameterType="String" resultType="com.connext.ebayhelpcenter.model.EbaySecondMenus">
         select second_title,content,second_id from ebay_second_menus where html like '%${value}%'
     </select>
@@ -121,4 +122,7 @@
         UPDATE ebay_first_menus SET first_title =#{firstTitle}
         WHERE first_serial = #{firstSerial}
     </update>
+=======
+
+>>>>>>> keywords
 </mapper>

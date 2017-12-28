@@ -36,28 +36,7 @@ public class ManagerController {
         List<EbayFirstMenus> list = managerService.listAllTitle();
         return list;
     }
-
-    /**
-     * @param keyword
-     * @return
-     */
-    @RequestMapping("/bb")
-    @ResponseBody
-    public List<EbaySecondMenus> queryKeyWords(String keyword){
-        log.info("keyword-->"+keyword);
-        List<EbaySecondMenus> list = this.managerService.queryKeyWords(keyword);
-        for(EbaySecondMenus e:list){
-            log.info(e.getContent());
-        }
-        return list;
-    }
-    @RequestMapping("/cc")
-    @ResponseBody
-    public  EbaySecondMenus queryContent(int secondId){
-        EbaySecondMenus ebaySecondMenus = this.managerService.queryContent(secondId);
-        return  ebaySecondMenus;
-    }
-
+    
     /*
         删除一级标题，需判断是否存在二级标题
         @Param("firstId") 一级菜单id

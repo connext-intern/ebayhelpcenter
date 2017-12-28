@@ -15,19 +15,7 @@ public interface ManagerDao {
      * @return 查询出所有的一级和二级菜单，并按照序列号排序
      */
     public List<EbayFirstMenus> listAllTitle();
-    /**
-     * 根据用户输入的关键字查询
-     * @param keyword
-     * @return
-     */
-    public List<EbaySecondMenus> queryKeyWords(String keyword);
 
-    /**
-     * 根据标题查询内容
-     * @param secondId
-     * @return
-     */
-    public EbaySecondMenus queryContent(int secondId);
 
     /*
         查询是否存在该二级菜单

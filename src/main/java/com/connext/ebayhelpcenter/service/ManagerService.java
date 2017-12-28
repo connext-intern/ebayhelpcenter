@@ -14,6 +14,7 @@ public interface ManagerService {
      * @return 查询出所有的一级二级菜单，并按照序列号排序
      */
     public List<EbayFirstMenus> listAllTitle();
+<<<<<<< 04010e835fc8d1152d50b88af9088afe56cd58e6
     /**
      * 根据用户输入的关键字查询
      * @param keyword
@@ -76,4 +77,7 @@ public interface ManagerService {
      *修改一级菜单标题
      */
     void updateFirst(int firstSerial,String title);
+=======
+
+>>>>>>> keywords
 }
