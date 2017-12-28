@@ -5,8 +5,8 @@ import com.connext.ebayhelpcenter.model.EbaySecondMenus;
 
 import java.util.List;
 
-/*
-    管理员接口类
+/**
+ * 管理员接口类
  */
 public interface ManagerService {
     /**
@@ -16,13 +16,17 @@ public interface ManagerService {
     public List<EbayFirstMenus> listAllTitle();
 
 
-    /*
-       删除一级标题
-    */
+    /**
+     * 删除一级标题
+     * @param firstId
+     * @return
+     */
     Boolean deleteFirstMenu(int firstId);
 
-    /*
-        删除二级菜单
+    /**
+     * 删除二级菜单
+     * @param secondId
+     * @return
      */
     Boolean deleteSecondMenu(int secondId);
 

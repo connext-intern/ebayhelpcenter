@@ -5,9 +5,11 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
+
 /**
- * @author Mengdi.Li
- * @date 2017/12/28 9:55
+ * 查看一二级菜单 正文持久层
  */
 @Repository
 public interface UserDao {
@@ -24,4 +26,12 @@ public interface UserDao {
      * @return
      */
     public EbaySecondMenus queryContent(int secondId);
+
+    /**
+     * 根据二级菜单id查找正文内容
+     * @param secondId
+     * @return
+     */
+    String queryHtmlInfoBySecondId(@Param("secondId") int secondId);
+
 }

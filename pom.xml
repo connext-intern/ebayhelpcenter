@@ -66,12 +66,22 @@
       <artifactId>mybatis-spring-boot-starter</artifactId>
       <version>1.3.1</version>
     </dependency>
+<<<<<<< 72c7ab87612383d78d883100e0cbc625f9609436
       <!-- fastjson -->
       <dependency>
           <groupId>com.alibaba</groupId>
           <artifactId>fastjson</artifactId>
           <version>1.2.41</version>
       </dependency>
+=======
+
+    <!-- fastjson -->
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>fastjson</artifactId>
+      <version>1.2.41</version>
+    </dependency>
+>>>>>>> update delete firstmenu and secondmenu functions to adapt separation
   </dependencies>
 
   <build>

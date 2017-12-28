@@ -3,10 +3,16 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.connext.ebayhelpcenter.dao.UserDao">
+
     <select id="queryKeyWords" parameterType="String" resultType="com.connext.ebayhelpcenter.model.EbaySecondMenus">
         select second_title,content,second_id from ebay_second_menus where html like '%${value}%'
     </select>
     <select id="queryContent" resultType="com.connext.ebayhelpcenter.model.EbaySecondMenus">
         select second_title,content from ebay_second_menus where second_id=#{VALUE}
+    </select>
+
+    <!-- 根据二级菜单id查找正文内容 -->
+    <select id="queryHtmlInfoBySecondId" resultType="String">
+        SELECT html FROM ebay_second_menus WHERE second_id = #{secondId}
     </select>
 </mapper>

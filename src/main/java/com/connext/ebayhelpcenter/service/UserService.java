@@ -21,4 +21,11 @@ public interface UserService {
      * @return
      */
     public EbaySecondMenus queryContent(int secondId);
+
+    /**
+     * 根据二级菜单id 查找正文内容
+     * @param secondId
+     * @return
+     */
+    String queryHtmlBySecondId(int secondId);
 }

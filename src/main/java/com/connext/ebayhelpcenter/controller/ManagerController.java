@@ -1,8 +1,11 @@
 ﻿package com.connext.ebayhelpcenter.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.connext.ebayhelpcenter.model.EbayFirstMenus;
 import com.connext.ebayhelpcenter.model.EbaySecondMenus;
 import com.connext.ebayhelpcenter.service.ManagerService;
+import com.sun.deploy.net.HttpResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /*
@@ -35,14 +38,16 @@ public class ManagerController {
         List<EbayFirstMenus> list = managerService.listAllTitle();
         return list;
     }
-    
-    /*
-        删除一级标题，需判断是否存在二级标题
-        @Param("firstId") 一级菜单id
+
+    /**
+     * 删除一级标题，需判断是否存在二级标题
+     * @param firstId
+     * @return
      */
-    @RequestMapping(value = "/deleteFirstMenu/{firstId}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/deleteFirstMenu/{firstId}", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public String deleteFirstMenu(@PathVariable("firstId") int firstId){
+    public String deleteFirstMenu(@PathVariable("firstId") int firstId, HttpServletResponse response){
+        response.setHeader("Access-Control-Allow-Origin", "*");
         log.info("ManagerController is deleteFirstMenu start...");
         log.info("firstId-->{}",firstId);
 
@@ -57,13 +62,15 @@ public class ManagerController {
         }
     }
 
-    /*
-       删除二级标题对象
-       @Param("secondId") 二级菜单id
-    */
-    @RequestMapping(value = "/deleteSecondMenu/{secondId}", method = RequestMethod.DELETE)
+    /**
+     * 删除二级标题对象
+     * @param secondId
+     * @return
+     */
+    @RequestMapping(value = "/deleteSecondMenu/{secondId}", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public String deleteSecondMenu(@PathVariable("secondId") int secondId){
+    public String deleteSecondMenu(@PathVariable("secondId") int secondId, HttpServletResponse response){
+        response.setHeader("Access-Control-Allow-Origin", "*");
         log.info("ManagerController is deleteSecondMenu start...");
         log.info("secondId-->{}",secondId);
 

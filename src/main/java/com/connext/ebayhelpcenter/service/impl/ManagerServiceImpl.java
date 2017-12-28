@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-/*
-    管理员接口实现类
+/**
+ *  管理员接口实现类
  */
 @Service
 public class ManagerServiceImpl implements ManagerService {
@@ -31,8 +31,11 @@ public class ManagerServiceImpl implements ManagerService {
         return managerDao.listAllTitle();
     }
 
-
-
+    /**
+     * 实现 删除一级菜单接口
+     * @param firstId
+     * @return
+     */
     @Override
     public Boolean deleteFirstMenu(int firstId) {
         log.info("ManagerServiceImpl is deleteFirstMenu start...");
@@ -40,6 +43,7 @@ public class ManagerServiceImpl implements ManagerService {
 
         //1.判断一级菜单下是否存在二级菜单
         Boolean isFirstHasSecondMenus = this.managerDao.firstHasSecondMenus(firstId);
+        log.info("isFirstHasSecondMenus-->"+isFirstHasSecondMenus);
         if(isFirstHasSecondMenus){
 
 
@@ -63,8 +67,10 @@ public class ManagerServiceImpl implements ManagerService {
         }
     }
 
-    /*
-        实现 删除二级菜单接口
+    /**
+     * 实现 删除二级菜单接口
+     * @param secondId
+     * @return
      */
     @Override
     public Boolean deleteSecondMenu(int secondId) {
@@ -73,6 +79,7 @@ public class ManagerServiceImpl implements ManagerService {
 
         //1.判断该二级菜单是否存在
         Boolean hasSecondMenu = this.managerDao.hasSecondMenu(secondId);
+        log.info("hasSecondMenu-->"+hasSecondMenu);
         if(hasSecondMenu){
             log.info("存在该二级菜单,准备删除");
             Boolean isDeleteSecondMenu = this.managerDao.deleteSecondMenuInfo(secondId);
