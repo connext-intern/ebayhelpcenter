@@ -9,6 +9,10 @@ import java.util.List;
     管理员接口类
  */
 public interface ManagerService {
+    /**
+     *
+     * @return 查询出所有的一级二级菜单，并按照序列号排序
+     */
     public List<EbayFirstMenus> listAllTitle();
     /**
      * 根据用户输入的关键字查询

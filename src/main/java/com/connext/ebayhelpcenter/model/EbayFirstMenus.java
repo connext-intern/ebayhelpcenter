@@ -6,7 +6,7 @@ public class EbayFirstMenus {
     private int firstId;
     private int firstSerial;
     private String firstTitle;
-    private List<EbaySecondMenus> secondMenuses;
+    private List<EbaySecondMenus> secondMenuses;//一级菜单对应的二级菜单
 
     public int getFirstId() {
         return firstId;

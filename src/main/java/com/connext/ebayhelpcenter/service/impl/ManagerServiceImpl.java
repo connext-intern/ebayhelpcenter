@@ -22,6 +22,10 @@ public class ManagerServiceImpl implements ManagerService {
     @Autowired
     private ManagerDao managerDao;
 
+    /**
+     *
+     * @return 查询出所有的一级二级菜单，并按照序列号排序
+     */
     @Override
     public List<EbayFirstMenus> listAllTitle() {
         return managerDao.listAllTitle();
