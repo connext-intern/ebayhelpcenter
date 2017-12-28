@@ -23,18 +23,5 @@ public class ManagerServiceImpl implements ManagerService {
     public List<EbayFirstMenus> listAllTitle() {
         return managerDao.listAllTitle();
     }
-    @Override
-    public List<EbaySecondMenus> queryKeyWords(String keyword) {
-        List<EbaySecondMenus> ebaySecondMenusList = this.managerDao.queryKeyWords(keyword);
-        for (int i=0;i<ebaySecondMenusList.size();i++){
-            String content = (ebaySecondMenusList.get(i).getContent()).substring(1,1);
-            ebaySecondMenusList.get(i).setContent(content);
-        }
-        return this.managerDao.queryKeyWords(keyword);
-    }
 
-    @Override
-    public EbaySecondMenus queryContent(int secondId) {
-        return this.managerDao.queryContent(secondId);
-    }
 }

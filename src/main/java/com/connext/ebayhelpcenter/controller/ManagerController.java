@@ -41,21 +41,6 @@ public class ManagerController {
         List<EbayFirstMenus> list = managerService.listAllTitle();
         return list;
     }
-    @RequestMapping("/bb")
-    @ResponseBody
-    public List<EbaySecondMenus> queryKeyWords(String keyword){
-        log.info("keyword-->"+keyword);
-        List<EbaySecondMenus> list = this.managerService.queryKeyWords(keyword);
-        for(EbaySecondMenus e:list){
-            log.info(e.getContent());
-        }
-        return list;
-    }
-    @RequestMapping("/cc")
-    @ResponseBody
-    public  EbaySecondMenus queryContent(int secondId){
-        EbaySecondMenus ebaySecondMenus = this.managerService.queryContent(secondId);
-        return  ebaySecondMenus;
-    }
+
 
 }

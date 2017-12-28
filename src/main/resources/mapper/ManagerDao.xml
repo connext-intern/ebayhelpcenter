@@ -25,10 +25,5 @@
         ON  f.first_id=s.second_first_id
         ORDER BY f.first_serial,s.second_serial
     </select>
-    <select id="queryKeyWords" parameterType="String" resultType="com.connext.ebayhelpcenter.model.EbaySecondMenus">
-        select second_title,content,second_id from ebay_second_menus where html like '%${value}%'
-    </select>
-    <select id="queryContent" resultType="com.connext.ebayhelpcenter.model.EbaySecondMenus">
-        select second_title,content from ebay_second_menus where second_id=#{VALUE}
-    </select>
+
 </mapper>
