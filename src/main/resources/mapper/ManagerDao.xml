@@ -117,11 +117,11 @@
     </update>
 
     <!-- 根据second_first_id查找标题 -->
-    <select id="findTitleById" resultType="com.connext.ebayhelpcenter.model.EbayFirstMenus">
+    <select id="findTitleById" resultType="com.connext.ebayhelpcenter.model.EbaySecondMenus">
         SELECT second_title FROM ebay_second_menus WHERE second_first_id = #{id}
     </select>
     <!-- 根据second_id查找内容 -->
-    <select id="findContentById" resultType="com.connext.ebayhelpcenter.model.EbayFirstMenus">
+    <select id="findContentById" resultType="com.connext.ebayhelpcenter.model.EbaySecondMenus">
         SELECT content,html FROM ebay_second_menus WHERE second_id = #{id}
     </select>
     <!-- 根据second_id修改二级标题 -->
@@ -138,7 +138,7 @@
     </update>
 
     <!-- 根据second_id修改二级标题对应的序号 -->
-    <update id="updateSecondHtml" parameterType="com.connext.ebayhelpcenter.model.EbaySecondMenus">
+    <update id="updateSecondSerial" parameterType="com.connext.ebayhelpcenter.model.EbaySecondMenus">
         UPDATE ebay_second_menus SET second_serial = #{second_serial} WHERE second_id = #{id}
     </update>
     

@@ -119,7 +119,7 @@ public interface ManagerDao {
      *通过second_id查询二级标题对应的内容
      *
      */
-    List<EbaySecondMenus> findContentById(int id);
+    EbaySecondMenus findContentById(int id);
 
     /**
      *

@@ -1,4 +1,4 @@
-﻿package com.connext.ebayhelpcenter.controller;
+package com.connext.ebayhelpcenter.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -210,8 +210,8 @@ public class ManagerController {
      */
     @RequestMapping("listSecondContent")
     @ResponseBody
-    public List<EbaySecondMenus> listSecondContent(int id) {
-        List<EbaySecondMenus> list = managerService.findContentById(id);
+    public EbaySecondMenus listSecondContent(int id) {
+        EbaySecondMenus list = managerService.findContentById(id);
         return list;
     }
 

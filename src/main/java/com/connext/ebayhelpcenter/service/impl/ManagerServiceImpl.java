@@ -192,17 +192,17 @@ public class ManagerServiceImpl implements ManagerService {
 
     /**
      *
-     *通过second_first_id查询二级标题
+     *通过second_first_id查询二级标题对应的内容
      *
      */
     @Override
-    public List<EbaySecondMenus> findContentById(Integer id) {
+    public EbaySecondMenus findContentById(Integer id) {
         return managerDao.findContentById(id);
     }
 
     /**
      *
-     *通过second_id查询二级标题对应的内容
+     *通过second_id查询二级标题
      *
      */
     @Override

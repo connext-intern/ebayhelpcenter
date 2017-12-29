@@ -73,14 +73,14 @@ public interface ManagerService {
 
     /**
      *
-     *通过second_first_id查询二级标题
+     *通过second_first_id查询二级标题对应的内容
      *
      */
-    List<EbaySecondMenus> findContentById(Integer id);
+    EbaySecondMenus findContentById(Integer id);
 
     /**
      *
-     *通过second_id查询二级标题对应的内容
+     *通过second_id查询二级标题
      *
      */
     List<EbaySecondMenus>findTitleById(Integer id);
