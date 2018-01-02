@@ -3,7 +3,7 @@ package com.connext.ebayhelpcenter.service.impl;
 import com.connext.ebayhelpcenter.dao.ManagerDao;
 import com.connext.ebayhelpcenter.model.EbayFirstMenus;
 import com.connext.ebayhelpcenter.model.EbaySecondMenus;
-import com.connext.ebayhelpcenter.model.ServiceException;
+import com.connext.ebayhelpcenter.util.ServiceException;
 import com.connext.ebayhelpcenter.service.ManagerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -103,7 +103,7 @@ public class ManagerServiceImpl implements ManagerService {
      */
     @Override
     public void saveFirstMenus(String firstTitle) {
-        if (firstTitle == ""){
+        if (firstTitle.trim().isEmpty()){
             throw new ServiceException("标题不能为空");
         }
         if (firstTitle.length() > TITLE_MAX){
@@ -126,7 +126,7 @@ public class ManagerServiceImpl implements ManagerService {
      */
     @Override
     public void saveSecondMenus(String secondTitle, String content, String html, int secondFirstId) {
-        if (secondTitle == ""){
+        if (secondTitle.trim().isEmpty()){
             throw new ServiceException("标题不能为空");
         }
         if (secondTitle.length() > TITLE_MAX){

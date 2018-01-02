@@ -1,6 +1,4 @@
-package com.connext.ebayhelpcenter.controller;
-import com.connext.ebayhelpcenter.model.JsonResult;
-import com.connext.ebayhelpcenter.model.ServiceException;
+package com.connext.ebayhelpcenter.util;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;

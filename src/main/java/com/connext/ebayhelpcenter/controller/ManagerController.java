@@ -3,9 +3,8 @@ package com.connext.ebayhelpcenter.controller;
 
 import com.connext.ebayhelpcenter.model.EbayFirstMenus;
 import com.connext.ebayhelpcenter.model.EbaySecondMenus;
-import com.connext.ebayhelpcenter.model.JsonResult;
+import com.connext.ebayhelpcenter.util.JsonResult;
 import com.connext.ebayhelpcenter.service.ManagerService;
-import com.sun.deploy.net.HttpResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.*;
-import javax.servlet.http.HttpServletRequest;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -113,7 +111,7 @@ public class ManagerController {
     @ResponseBody
     public JsonResult newSecondMenus(HttpServletResponse response,String secondTitle, String content, String html, int secondFirstId) {
         response.setHeader("Access-Control-Allow-Origin", "*");
-        managerService.newSecondMenus(secondTitle, content, html, secondFirstId);
+        managerService.saveSecondMenus(secondTitle, content, html, secondFirstId);
         return new JsonResult();
     }
 
