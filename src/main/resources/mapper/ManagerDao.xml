@@ -117,7 +117,7 @@
         WHERE first_id = #{firstId}
     </update>
 
-    <!-- 根据second_first_id查找标题 -->
+    <!-- 根据second_id查找标题 -->
     <select id="findTitleById" resultType="com.connext.ebayhelpcenter.model.EbaySecondMenus">
         SELECT second_title FROM ebay_second_menus WHERE second_first_id = #{id}
     </select>

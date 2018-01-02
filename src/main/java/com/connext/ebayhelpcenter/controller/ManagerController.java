@@ -173,20 +173,23 @@ public class ManagerController {
     /**
      *  通过一级菜单的id（second_first_id）查询二级菜单对应的标题
      */
+
     @RequestMapping("/listSecondTitle/{firstId}")
     @ResponseBody
-    public List<EbaySecondMenus> listSecondTitle(@PathVariable("firstId") Integer firstId,HttpServletResponse response) {
+    public EbaySecondMenus listSecondTitle(@PathVariable("firstId") Integer firstId,HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", "*");
-        List<EbaySecondMenus> list = managerService.findTitleById(firstId);
+        EbaySecondMenus list = managerService.findTitleById(firstId);
+
         return list;
     }
 
     /**
      *  通过二级菜单的id（second_id）查询二级菜单对应的内容
      */
-    @RequestMapping("listSecondContent")
+    @RequestMapping(value = "listSecondContent",method = RequestMethod.POST)
     @ResponseBody
-    public EbaySecondMenus listSecondContent(int id) {
+    public EbaySecondMenus listSecondContent(int id,HttpServletResponse response) {
+        response.setHeader("Access-Control-Allow-Origin", "*");
         EbaySecondMenus list = managerService.findContentById(id);
         return list;
     }
@@ -194,13 +197,20 @@ public class ManagerController {
     /**
      * 修改二级菜单标题和内容
      */
-    @RequestMapping(value = "updateSecond",method = RequestMethod.PUT)
+    @RequestMapping(value = "updateSecond", method = RequestMethod.POST)
     @ResponseBody
-    public String updateSecond(Integer id,String title,String content,String html,Integer serial,HttpServletRequest request){
-        managerService.updateSecondTitle(id,title);
-        managerService.updateSecondContent(id,content);
-        managerService.updateSecondHtml(id,html);
-        managerService.updateSecondSerial(id,serial);
+    public String updateSecond(Integer id, String title, String content, String html, HttpServletResponse response) {
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        if (title != null) {
+            managerService.updateSecondTitle(id, title);
+        }
+        if (content != null) {
+            managerService.updateSecondContent(id, content);
+        }
+        if (html != null) {
+            managerService.updateSecondHtml(id, html);
+        }
+
         return "success to update";
     }
 

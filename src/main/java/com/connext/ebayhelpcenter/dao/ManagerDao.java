@@ -111,10 +111,10 @@ public interface ManagerDao {
 
     /**
      *
-     *通过second_first_id查询二级标题
+     *通过second_id查询二级标题
      *
      */
-    List<EbaySecondMenus> findTitleById(int id);
+    EbaySecondMenus findTitleById(int id);
 
     /**
      *

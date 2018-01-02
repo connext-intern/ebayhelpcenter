@@ -164,51 +164,50 @@ public class ManagerServiceImpl implements ManagerService {
      */
     @Override
     public List<EbayFirstMenus> showAllFirst() {
-        return managerDao.listAllFirstTitle();
+        return managerDao.showAllFirst();
     }
-
 
     /**
      * 修改一级标题
      * @param firstSerial
-     * @param firstTitle
+     * @param
      */
     @Override
     public String updateFirst(Integer firstSerial, String firstTitle,Integer firstId) {
 
         String str = "";
 
-            if (firstTitle == null){
-                log.info("标题不得为空");
+        if (firstTitle == null){
+            log.info("标题不得为空");
+            str = "fail";
+        }
+        else if (firstId==null||firstSerial==null||firstTitle == null){
+            log.info("firstid或者serial不能为空或者title不能为空");
+            str = "fail";
+        }
+        else if (firstTitle.length()>8){
+            log.info("标题字数不能多余八个字");
+            str = "fail";
+        }
+        else if (firstTitle.length()<8&&firstId!=null&&firstSerial!=null){
+            EbayFirstMenus ebayFirstMenus = managerDao.findFirstId(firstId);
+            if (ebayFirstMenus!=null){
+                managerDao.updateFirst(firstSerial,firstTitle,firstId);
+                str = "success";
+            }
+            else {
+                log.info("没有找到对应的id");
                 str = "fail";
             }
-            else if (firstId==null||firstSerial==null||firstTitle == null){
-                log.info("firstid或者serial不能为空或者title不能为空");
-                str = "fail";
-            }
-            else if (firstTitle.length()>8){
-                log.info("标题字数不能多余八个字");
-                str = "fail";
-            }
-            else if (firstTitle.length()<8&&firstId!=null&&firstSerial!=null){
-                EbayFirstMenus ebayFirstMenus = managerDao.findFirstId(firstId);
-                if (ebayFirstMenus!=null){
-                    managerDao.updateFirst(firstSerial,firstTitle,firstId);
-                    str = "success";
-                }
-                else {
-                    log.info("没有找到对应的id");
-                    str = "fail";
-                }
 
-            }
+        }
 
         return str;
     }
 
     /**
      *
-     *通过second_first_id查询二级标题对应的内容
+     *通过second__id查询二级标题对应的内容
      *
      */
     @Override
@@ -218,12 +217,12 @@ public class ManagerServiceImpl implements ManagerService {
 
     /**
      *
-     *通过first_id查询二级标题
+     *通过second_id查询二级标题
      *
      */
     @Override
-    public List<EbaySecondMenus> findTitleById(Integer id) {
-        return managerDao.listAllSencondTitleByFirstId(id);
+    public EbaySecondMenus findTitleById(Integer id) {
+        return managerDao.findTitleById(id);
     }
 
     /**
