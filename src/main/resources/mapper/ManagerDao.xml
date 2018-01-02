@@ -30,6 +30,7 @@
         WHERE second_first_id = #{firstId,jdbcType=INTEGER}
         ORDER BY second_serial
     </select>
+    <!-- 查出所有的一级和二级菜单 -->
     <select id="listAllTitle" resultMap="ebayFirstMenus">
         SELECT f.first_id,s.second_id,f.first_title,s.second_title
         FROM ebay_first_menus f left join ebay_second_menus s
