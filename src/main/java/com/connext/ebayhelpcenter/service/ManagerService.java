@@ -68,7 +68,7 @@ public interface ManagerService {
     /**
      *修改一级菜单标题
      */
-    void updateFirst(int firstSerial,String title);
+    String updateFirst(Integer firstSerial,String firstTitle,Integer firstId);
 
 
     /**

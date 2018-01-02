@@ -167,27 +167,43 @@ public class ManagerServiceImpl implements ManagerService {
         return managerDao.showAllFirst();
     }
 
+
     /**
      * 修改一级标题
      * @param firstSerial
-     * @param title
+     * @param firstTitle
      */
     @Override
-    public void updateFirst(int firstSerial, String title) {
-        String hasFirstSerial = managerDao.findFirstSerial(firstSerial);
-        if (hasFirstSerial!=null){
-            if (title == null){
+    public String updateFirst(Integer firstSerial, String firstTitle,Integer firstId) {
+
+        String str = "";
+
+            if (firstTitle == null){
                 log.info("标题不得为空");
+                str = "fail";
             }
-            else {
-                managerDao.updateFirst(firstSerial,title);
+            else if (firstId==null||firstSerial==null||firstTitle == null){
+                log.info("firstid或者serial不能为空或者title不能为空");
+                str = "fail";
             }
-        }
-        else {
-            log.info("没有找到输入id所对应的一级菜单");
-        }
+            else if (firstTitle.length()>8){
+                log.info("标题字数不能多余八个字");
+                str = "fail";
+            }
+            else if (firstTitle.length()<8&&firstId!=null&&firstSerial!=null){
+                EbayFirstMenus ebayFirstMenus = managerDao.findFirstId(firstId);
+                if (ebayFirstMenus!=null){
+                    managerDao.updateFirst(firstSerial,firstTitle,firstId);
+                    str = "success";
+                }
+                else {
+                    log.info("没有找到对应的id");
+                    str = "fail";
+                }
 
+            }
 
+        return str;
     }
 
     /**

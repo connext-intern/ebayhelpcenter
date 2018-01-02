@@ -111,10 +111,10 @@
     <select id="showAllFirst" resultType="com.connext.ebayhelpcenter.model.EbayFirstMenus">
         SELECT * FROM ebay_first_menus
     </select>
-    <!-- 根据serialid修改标题 -->
+    <!-- 根据firstid修改标题  zhangyang-->
     <update id="updateFirst" parameterType="com.connext.ebayhelpcenter.model.EbayFirstMenus">
-        UPDATE ebay_first_menus SET first_title =#{firstTitle}
-        WHERE first_serial = #{firstSerial}
+        UPDATE ebay_first_menus SET first_title =#{firstTitle},first_serial=#{firstSerial}
+        WHERE first_id = #{firstId}
     </update>
 
     <!-- 根据second_first_id查找标题 -->
@@ -142,9 +142,9 @@
     <update id="updateSecondSerial" parameterType="com.connext.ebayhelpcenter.model.EbaySecondMenus">
         UPDATE ebay_second_menus SET second_serial = #{second_serial} WHERE second_id = #{id}
     </update>
-    
-    <select id="findFirstSerial" resultType="com.connext.ebayhelpcenter.model.EbayFirstMenus">
+    <!-- 查找一级标题中的id  zhangyang-->
+    <select id="findFirstId" resultType="com.connext.ebayhelpcenter.model.EbayFirstMenus">
         SELECT * FROM ebay_first_menus
-        WHERE first_serial=#{firstSerial}
+        WHERE first_id=#{firstId}
     </select>
 </mapper>

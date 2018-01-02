@@ -103,9 +103,11 @@ public interface ManagerDao {
     List<EbayFirstMenus> showAllFirst();
 
     /**
+     * firstSerial 是 标题排序的顺序
+     * firstId 是title的id
      * 修改标题
      */
-    void updateFirst(@Param("firstSerial")int firstSerial,@Param("firstTitle")String title);
+    void updateFirst(@Param("firstSerial")int firstSerial,@Param("firstTitle")String firstTitle,@Param("firstId")int firstId);
 
     /**
      *
@@ -150,8 +152,8 @@ public interface ManagerDao {
     void updateSecondSerial(@Param("id")int id,@Param("second_serial")int second_serial);
     /**
      * 查找是否含有一级菜单的id
-     * @param firstSerial
+     * @param firstId
      * @return
      */
-    String findFirstSerial(@Param("firstSerial")int firstSerial);
+    EbayFirstMenus findFirstId(@Param("firstId")int firstId);
 }

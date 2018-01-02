@@ -173,13 +173,14 @@ public class ManagerController {
     }
 
     /**
-     * 修改一级菜单标题
+     * 修改一级菜单标题 zhangyang
      */
-    @RequestMapping(value = "updateFirst")
+    @RequestMapping(value = "/updateFirst",method = RequestMethod.POST)
     @ResponseBody
-    public String updateFirst(Integer firstSerial,String firstTitle,HttpServletRequest request){
-        managerService.updateFirst(firstSerial,firstTitle);
-        return "success to update";
+    public String updateFirst(Integer firstSerial,String firstTitle,Integer firstId, HttpServletResponse response){
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        String str = managerService.updateFirst(firstSerial,firstTitle,firstId);
+        return str;
     }
 
 
