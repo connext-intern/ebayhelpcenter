@@ -18,8 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-/*
-    管理员对菜单的增删改查操作类
+/**
+ * 管理员对菜单的增删改查操作类
  */
 @Controller
 @RequestMapping("/manager")
@@ -143,34 +143,6 @@ public class ManagerController {
         return "success";
     }
 
-    /**
-     * 给一级菜单进行排序测试
-     * By Zach Zhang
-     * @return
-     */
-    @RequestMapping("/sortFirstTitleTest")
-    @ResponseBody
-    public String sortFirstTitleTest(){
-        //此处写死一个数组进行测试，
-        Integer[] firstSerials={2,1,4,3,5,6};
-        log.info("传进来的新序列是：{}",firstSerials);
-        managerService.sortFirstTitle(firstSerials);
-        return "success";
-    }
-    /**
-     * 给二级菜单进行排序测试
-     * ByZach Zhang
-     * @return
-     */
-    @RequestMapping("/sortSecondTitleTest")
-    @ResponseBody
-    public String sortSecondTitleTest(){
-        int firstId = 2;
-        Integer[] secondSerials = {1,2,3,5,6,7,4};
-        log.info("传进来的二级菜单们的一级菜单id和新的序列分别是：{},{}",firstId,secondSerials);
-        managerService.sortSecondTitle(firstId,secondSerials);
-        return "success";
-    }
 
     /**
      * 修改一级菜单标题 zhangyang
@@ -188,9 +160,10 @@ public class ManagerController {
      * 查询所有一级菜单标题
      * @return
      */
-    @RequestMapping(value = "showAllFirst",method = RequestMethod.GET)
+    @RequestMapping(value = "showAllFirst",method = RequestMethod.POST)
     @ResponseBody
-    public List<EbayFirstMenus> showAllFirst(){
+    public List<EbayFirstMenus> showAllFirst(HttpServletResponse response){
+        response.setHeader("Access-Control-Allow-Origin", "*");
         List<EbayFirstMenus> ebayFirstMenu = managerService.showAllFirst();
         return ebayFirstMenu;
     }
@@ -200,10 +173,11 @@ public class ManagerController {
     /**
      *  通过一级菜单的id（second_first_id）查询二级菜单对应的标题
      */
-    @RequestMapping("listSecondTitle")
+    @RequestMapping("/listSecondTitle/{firstId}")
     @ResponseBody
-    public List<EbaySecondMenus> listSecondTitle(int id) {
-        List<EbaySecondMenus> list = managerService.findTitleById(id);
+    public List<EbaySecondMenus> listSecondTitle(@PathVariable("firstId") Integer firstId,HttpServletResponse response) {
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        List<EbaySecondMenus> list = managerService.findTitleById(firstId);
         return list;
     }
 

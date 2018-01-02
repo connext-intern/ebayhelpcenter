@@ -164,7 +164,7 @@ public class ManagerServiceImpl implements ManagerService {
      */
     @Override
     public List<EbayFirstMenus> showAllFirst() {
-        return managerDao.showAllFirst();
+        return managerDao.listAllFirstTitle();
     }
 
 
@@ -218,12 +218,12 @@ public class ManagerServiceImpl implements ManagerService {
 
     /**
      *
-     *通过second_id查询二级标题
+     *通过first_id查询二级标题
      *
      */
     @Override
     public List<EbaySecondMenus> findTitleById(Integer id) {
-        return managerDao.findTitleById(id);
+        return managerDao.listAllSencondTitleByFirstId(id);
     }
 
     /**
