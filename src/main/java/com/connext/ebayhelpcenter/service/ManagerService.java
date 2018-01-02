@@ -13,7 +13,7 @@ public interface ManagerService {
      *
      * @return 查询出所有的一级二级菜单，并按照序列号排序
      */
-    public List<EbayFirstMenus> listAllTitle();
+    List<EbayFirstMenus> listAllTitle();
 
 
     /**

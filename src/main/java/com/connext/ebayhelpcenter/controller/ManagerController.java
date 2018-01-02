@@ -5,6 +5,7 @@ import com.connext.ebayhelpcenter.model.EbayFirstMenus;
 import com.connext.ebayhelpcenter.model.EbaySecondMenus;
 import com.connext.ebayhelpcenter.util.JsonResult;
 import com.connext.ebayhelpcenter.service.ManagerService;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,22 +45,18 @@ public class ManagerController {
      * @param firstId
      * @return
      */
-    @RequestMapping(value = "/deleteFirstMenu/{firstId}", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/deleteFirstMenu/{firstId}", method = RequestMethod.POST, produces = "application/json;charset=UTF-8" )
     @ResponseBody
-    public String deleteFirstMenu(@PathVariable("firstId") int firstId, HttpServletResponse response){
+    public JsonResult deleteFirstMenu(@PathVariable("firstId") int firstId, HttpServletResponse response){
         response.setHeader("Access-Control-Allow-Origin", "*");
         log.info("ManagerController is deleteFirstMenu start...");
-        log.info("firstId-->{}",firstId);
 
         //删除一级菜单
         Boolean  isDeleteFirstMenu = this.managerService.deleteFirstMenu(firstId);
-        if(isDeleteFirstMenu){
-            log.info("一级菜单删除成功");
-            return "deleteFirstMenuSuccess";
-        }else{
-            log.info("一级菜单删除失败");
-            return "deleteFirstMenuFail";
+        if(!isDeleteFirstMenu){
+            log.info("deleteFirstMenu fail");
         }
+        return new JsonResult();
     }
 
     /**
@@ -67,23 +64,19 @@ public class ManagerController {
      * @param secondId
      * @return
      */
-    @RequestMapping(value = "/deleteSecondMenu/{secondId}", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/deleteSecondMenu/{secondId}", method = RequestMethod.POST, produces = "application/json;charset=UTF-8" )
     @ResponseBody
-    public String deleteSecondMenu(@PathVariable("secondId") int secondId, HttpServletResponse response){
+    public JsonResult deleteSecondMenu(@PathVariable("secondId") int secondId, HttpServletResponse response){
         response.setHeader("Access-Control-Allow-Origin", "*");
         log.info("ManagerController is deleteSecondMenu start...");
-        log.info("secondId-->{}",secondId);
 
         Boolean isDeleteSecondMenu = this.managerService.deleteSecondMenu(secondId);
         log.info("删除二级菜单对象-->"+isDeleteSecondMenu);
 
-        if(isDeleteSecondMenu){
-            log.info("deleteSecondMenu success");
-            return "deleteSecondMenuSuccess";
-        }else{
+        if(!isDeleteSecondMenu){
             log.info("deleteSecondMenu fail");
-            return "deleteSecondMenuFail";
         }
+        return new JsonResult();
     }
 
     /**

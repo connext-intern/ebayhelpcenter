@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.connext.ebayhelpcenter.dao.ArticleDao">
+    <!-- 根据二级菜单id查找正文内容 -->
+    <select id="queryHtmlInfoBySecondId" resultType="String">
+        SELECT html FROM ebay_second_menus WHERE second_id = #{secondId}
+    </select>
+</mapper>

@@ -48,6 +48,11 @@
         DELETE FROM ebay_second_menus WHERE second_id = #{secondId}
     </delete>
 
+    <!-- 查询是否存在该一级菜单 -->
+    <select id="hasFirstMenu" resultType="boolean">
+        <![CDATA[ SELECT count(*) FROM ebay_first_menus WHERE first_id = #{firstId} ]]>
+    </select>
+
     <!-- 查询一级菜单下是否存在二级菜单 -->
     <select id="firstHasSecondMenus" resultType="boolean">
         <![CDATA[ SELECT count(*) FROM ebay_second_menus WHERE second_first_id = #{firstId} ]]>

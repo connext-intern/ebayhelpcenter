@@ -24,12 +24,19 @@ public interface ManagerDao {
      */
     Boolean hasSecondMenu(@Param("secondId") int secondId);
 
-    /*
-        删除该二级菜单
-        @Param("secondId") 二级菜单id
-        @return boolean
+    /**
+     *  删除该二级菜单
+     *   @Param secondId
+      *  @return boolean
      */
     Boolean deleteSecondMenuInfo(@Param("secondId") int secondId);
+
+    /**
+     * 查询是否存在该一级菜单
+     * @param firstId
+     * @return
+     */
+    Boolean hasFirstMenu(@Param("firstId") int firstId);
 
     /**
      * 查询一级菜单下是否存在二级菜单
@@ -43,7 +50,6 @@ public interface ManagerDao {
      * @param firstId
      * @return
      */
-    @Transactional
     Boolean deleteSecondMenusInfoFromFirst(@Param("firstId") int firstId);
 
     /**
@@ -51,7 +57,6 @@ public interface ManagerDao {
      * @param firstId
      * @return
      */
-    @Transactional
     Boolean deleteFirstMenuInfo(@Param("firstId") int firstId);
 
     /**
@@ -157,7 +162,6 @@ public interface ManagerDao {
      * @return
      */
     EbayFirstMenus findFirstId(@Param("firstId")int firstId);
-
 
     /**
      * 新增一级菜单时检查菜单标题是否存在

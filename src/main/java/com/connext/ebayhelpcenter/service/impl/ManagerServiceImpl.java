@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -38,16 +39,30 @@ public class ManagerServiceImpl implements ManagerService {
      * @return
      */
     @Override
+    @Transactional
     public Boolean deleteFirstMenu(int firstId) {
         log.info("ManagerServiceImpl is deleteFirstMenu start...");
+
+        //1.判断传入值是否为空
+        if(firstId == 0){
+            throw new ServiceException("firstId is null");
+        }
         log.info("firstId-->{}",firstId);
 
-        //1.判断一级菜单下是否存在二级菜单
+        //2.判断该一级菜单是否存在
+        Boolean hasFirstMenu = this.managerDao.hasFirstMenu(firstId);
+        log.info("hasFirstMenu-->"+hasFirstMenu);
+
+        if(!hasFirstMenu){
+            log.info("firstMenu not exist");
+            throw new ServiceException("firstMenu not exist");
+        }
+
+        //3.判断一级菜单下是否存在二级菜单
         Boolean isFirstHasSecondMenus = this.managerDao.firstHasSecondMenus(firstId);
         log.info("isFirstHasSecondMenus-->"+isFirstHasSecondMenus);
         if(isFirstHasSecondMenus){
-
-
+            log.info("该一级菜单下存在二级菜单，准备删除二级菜单");
             Boolean b1 = this.managerDao.deleteSecondMenusInfoFromFirst(firstId);
             Boolean b2 = this.managerDao.deleteFirstMenuInfo(firstId);
             if(b1 && b2){
@@ -55,7 +70,7 @@ public class ManagerServiceImpl implements ManagerService {
                 return true;
             }else{
                 log.info("b1或b2删除操作失败");
-                return false;
+                throw new ServiceException("transaction error");
             }
         }else{
             log.info("该一级菜单下不存在二级菜单,直接删除一级菜单即可");
@@ -63,7 +78,7 @@ public class ManagerServiceImpl implements ManagerService {
             if(b){
                 return true;
             }else {
-                return false;
+                throw new ServiceException("delete firstMenu fail");
             }
         }
     }
@@ -76,25 +91,32 @@ public class ManagerServiceImpl implements ManagerService {
     @Override
     public Boolean deleteSecondMenu(int secondId) {
         log.info("ManagerServiceImpl is deleteSecondMenu start...");
+
+        //1.判断传入值是否为空
+        if(secondId == 0){
+            throw new ServiceException("secondId id null");
+        }
         log.info("secondId-->{}",secondId);
 
-        //1.判断该二级菜单是否存在
+        //2.判断该二级菜单是否存在
         Boolean hasSecondMenu = this.managerDao.hasSecondMenu(secondId);
         log.info("hasSecondMenu-->"+hasSecondMenu);
-        if(hasSecondMenu){
-            log.info("存在该二级菜单,准备删除");
-            Boolean isDeleteSecondMenu = this.managerDao.deleteSecondMenuInfo(secondId);
-            if(isDeleteSecondMenu){
-                log.info("该二级菜单 删除成功");
-                return true;
-            }else{
-                log.info("该二级菜单 删除失败");
-                return false;
-            }
-        }else{
-            log.info("不存在该二级菜单");
-            return false;
+
+        if(!hasSecondMenu){
+            log.info("secondMenu not exist");
+            throw new ServiceException("secondMenu not exist");
         }
+
+        log.info("存在该二级菜单,准备删除");
+        Boolean isDeleteSecondMenu = this.managerDao.deleteSecondMenuInfo(secondId);
+        if(isDeleteSecondMenu){
+            log.info("该二级菜单 删除成功");
+            return true;
+        }else{
+            log.info("该二级菜单 删除失败");
+            throw new ServiceException("delete secondMenu fail");
+        }
+
     }
 
     /**
@@ -202,34 +224,25 @@ public class ManagerServiceImpl implements ManagerService {
      */
     @Override
     public String updateFirst(Integer firstSerial, String firstTitle,Integer firstId) {
-
         String str = "";
-
-        if (firstTitle == null){
+        if (firstTitle == null) {
             log.info("标题不得为空");
             str = "fail";
-        }
-        else if (firstId==null||firstSerial==null||firstTitle == null){
+        } else if (firstId == null || firstSerial == null || firstTitle == null) {
             log.info("firstid或者serial不能为空或者title不能为空");
             str = "fail";
-        }
-        else if (firstTitle.length()>8){
+        } else if (firstTitle.length() > 8) {
             log.info("标题字数不能多余八个字");
             str = "fail";
-        }
-        else if (firstTitle.length()<8&&firstId!=null&&firstSerial!=null){
+        } else if (firstTitle.length() < 8 && firstId != null && firstSerial != null) {
             EbayFirstMenus ebayFirstMenus = managerDao.findFirstId(firstId);
-            if (ebayFirstMenus!=null){
-                managerDao.updateFirst(firstSerial,firstTitle,firstId);
+            if (ebayFirstMenus != null) {
+                managerDao.updateFirst(firstSerial, firstTitle, firstId);
                 str = "success";
-            }
-            else {
+            } else {
                 log.info("没有找到对应的id");
-                str = "fail";
             }
-
         }
-
         return str;
     }
 
