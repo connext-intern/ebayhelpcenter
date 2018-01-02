@@ -119,7 +119,7 @@
 
     <!-- 根据second_id查找标题 -->
     <select id="findTitleById" resultType="com.connext.ebayhelpcenter.model.EbaySecondMenus">
-        SELECT second_title FROM ebay_second_menus WHERE second_first_id = #{id}
+        SELECT second_title FROM ebay_second_menus WHERE second_id = #{id}
     </select>
     <!-- 根据second_id查找内容 -->
     <select id="findContentById" resultType="com.connext.ebayhelpcenter.model.EbaySecondMenus">

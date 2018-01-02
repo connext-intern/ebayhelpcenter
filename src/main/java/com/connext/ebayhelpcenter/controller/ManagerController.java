@@ -171,7 +171,7 @@ public class ManagerController {
   
 
     /**
-     *  通过一级菜单的id（second_first_id）查询二级菜单对应的标题
+     *  通过一级菜单的id（second_id）查询二级菜单对应的标题
      */
 
     @RequestMapping("/listSecondTitle/{firstId}")
@@ -179,7 +179,7 @@ public class ManagerController {
     public EbaySecondMenus listSecondTitle(@PathVariable("firstId") Integer firstId,HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", "*");
         EbaySecondMenus list = managerService.findTitleById(firstId);
-
+        
         return list;
     }
 
