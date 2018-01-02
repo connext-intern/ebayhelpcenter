@@ -3,8 +3,8 @@ package com.connext.ebayhelpcenter.service.impl;
 import com.connext.ebayhelpcenter.dao.ManagerDao;
 import com.connext.ebayhelpcenter.model.EbayFirstMenus;
 import com.connext.ebayhelpcenter.model.EbaySecondMenus;
+import com.connext.ebayhelpcenter.model.ServiceException;
 import com.connext.ebayhelpcenter.service.ManagerService;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +18,7 @@ import java.util.List;
 @Service
 public class ManagerServiceImpl implements ManagerService {
     private static Logger log = LoggerFactory.getLogger(ManagerServiceImpl.class);
+    private static final int TITLE_MAX=8;
 
     @Autowired
     private ManagerDao managerDao;
@@ -96,27 +97,54 @@ public class ManagerServiceImpl implements ManagerService {
         }
     }
 
+    /**
+     * 增加一级菜单
+     * @param firstTitle 菜单标题
+     */
     @Override
-    public void newFirstMenus(String firstTitle) {
+    public void saveFirstMenus(String firstTitle) {
+        if (firstTitle == ""){
+            throw new ServiceException("标题不能为空");
+        }
+        if (firstTitle.length() > TITLE_MAX){
+            throw new ServiceException("标题字数不能多于8");
+        }
+        if (managerDao.hasFirstMenusTitle(firstTitle)){
+            throw new ServiceException("标题已存在");
+        }
         EbayFirstMenus ebayFirstMenus = new EbayFirstMenus();
         ebayFirstMenus.setFirstTitle(firstTitle);
-        managerDao.newFirstMenus(ebayFirstMenus);
+        managerDao.saveFirstMenus(ebayFirstMenus);
     }
 
+    /**
+     * 增加二级菜单及其内容
+     * @param secondTitle 菜单标题
+     * @param content 纯文本内容
+     * @param html 内容的html
+     * @param secondFirstId 对应一级菜单的编号
+     */
     @Override
-    public Boolean newSecondMenus(String secondTitle, String content, String html, int secondFirstId) {
+    public void saveSecondMenus(String secondTitle, String content, String html, int secondFirstId) {
+        if (secondTitle == ""){
+            throw new ServiceException("标题不能为空");
+        }
+        if (secondTitle.length() > TITLE_MAX){
+            throw new ServiceException("标题字数不能多于8");
+        }
+        if (!managerDao.hasFirstMenus(secondFirstId)){
+            throw new ServiceException("一级菜单不存在");
+        }
         EbaySecondMenus ebaySecondMenus = new EbaySecondMenus();
         ebaySecondMenus.setSecondTitle(secondTitle);
         ebaySecondMenus.setContent(content);
         ebaySecondMenus.setHtml(html);
         ebaySecondMenus.setSecondFirstId(secondFirstId);
 
-        if (managerDao.hasFirstMenus(secondFirstId)) {
-            managerDao.newSecondMenus(ebaySecondMenus);
-            return true;
-        } else {
-            return false;
+        if (managerDao.hasSecondMenusTitle(ebaySecondMenus)){
+            throw new ServiceException("标题已存在");
         }
+        managerDao.saveSecondMenus(ebaySecondMenus);
     }
 
         /**

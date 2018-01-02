@@ -34,7 +34,7 @@ public interface ManagerService {
      * 增加一级菜单
      * @param firstTitle 菜单标题
      */
-    void newFirstMenus(String firstTitle);
+    void saveFirstMenus(String firstTitle);
 
     /**
      * 增加二级菜单及其内容
@@ -43,7 +43,7 @@ public interface ManagerService {
      * @param html 内容的html
      * @param secondFirstId 对应一级菜单的编号
      */
-    Boolean newSecondMenus(String secondTitle,String content,String html,int secondFirstId);
+    void saveSecondMenus(String secondTitle,String content,String html,int secondFirstId);
     /**
      * 对一级菜单进行排序
      * By Zach Zhang
@@ -112,5 +112,7 @@ public interface ManagerService {
      *
      */
     void updateSecondSerial(Integer id,Integer second_serial);
+
+
 
 }

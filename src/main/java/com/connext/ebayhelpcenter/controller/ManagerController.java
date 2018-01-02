@@ -1,9 +1,9 @@
 package com.connext.ebayhelpcenter.controller;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
+
 import com.connext.ebayhelpcenter.model.EbayFirstMenus;
 import com.connext.ebayhelpcenter.model.EbaySecondMenus;
+import com.connext.ebayhelpcenter.model.JsonResult;
 import com.connext.ebayhelpcenter.service.ManagerService;
 import com.sun.deploy.net.HttpResponse;
 import org.slf4j.Logger;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
+
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
@@ -94,9 +95,10 @@ public class ManagerController {
      */
     @RequestMapping(value = "newFirstMenus", method = RequestMethod.POST)
     @ResponseBody
-    public String newFirstMenus(String firstTitle){
-        managerService.newFirstMenus(firstTitle);
-        return "ok";
+    public JsonResult newFirstMenus(HttpServletResponse response, String firstTitle){
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        managerService.saveFirstMenus(firstTitle);
+        return new JsonResult();
     }
 
     /**
@@ -109,13 +111,13 @@ public class ManagerController {
      */
     @RequestMapping(value = "newSecondMenus", method = RequestMethod.POST)
     @ResponseBody
-    public String newSecondMenus(String secondTitle, String content, String html, int secondFirstId) {
-        Boolean isNewSecondMenus = managerService.newSecondMenus(secondTitle, content, html, secondFirstId);
-        if (isNewSecondMenus) {
-            return "newSecondMenusSuccess";
-        }
-        return "newSecondMenusFail";
+    public JsonResult newSecondMenus(HttpServletResponse response,String secondTitle, String content, String html, int secondFirstId) {
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        managerService.newSecondMenus(secondTitle, content, html, secondFirstId);
+        return new JsonResult();
     }
+
+
     /**
      * 给一级菜单进行排序
      * ByZach Zhang
@@ -162,7 +164,7 @@ public class ManagerController {
      */
     @RequestMapping(value = "showAllFirst",method = RequestMethod.POST)
     @ResponseBody
-    public List<EbayFirstMenus> showAllFirst(HttpServletResponse response){
+    public List<EbayFirstMenus> showAllFirst(HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", "*");
         List<EbayFirstMenus> ebayFirstMenu = managerService.showAllFirst();
         return ebayFirstMenu;

@@ -58,19 +58,20 @@ public interface ManagerDao {
      * 增加一级菜单
      * @param ebayFirstMenus
      */
-    void newFirstMenus(@Param("ebayFirstMenus") EbayFirstMenus ebayFirstMenus);
+    void saveFirstMenus(@Param("ebayFirstMenus") EbayFirstMenus ebayFirstMenus);
 
     /**
      * 增加二级菜单及其内容
      * @param ebaySecondMenus
      */
-    void newSecondMenus(@Param("ebaySecondMenus") EbaySecondMenus ebaySecondMenus);
+    void saveSecondMenus(@Param("ebaySecondMenus") EbaySecondMenus ebaySecondMenus);
 
     /**
      * 新增二级菜单时判断一级菜单是否还存在
      * @param secondFirstId
      */
     Boolean hasFirstMenus(@Param("secondFirstId") int secondFirstId);
+
     /**
      * 查出所有的一级菜单zhangchi
      * @return
@@ -156,4 +157,20 @@ public interface ManagerDao {
      * @return
      */
     EbayFirstMenus findFirstId(@Param("firstId")int firstId);
+
+
+    /**
+     * 新增一级菜单时检查菜单标题是否存在
+     * @param firstTitle
+     * @return
+     */
+    Boolean hasFirstMenusTitle(@Param("firstTitle") String firstTitle);
+
+    /**
+     * 新增二级菜单时检查菜单标题是否存在
+     * @param ebaySecondMenus
+     * @return
+     */
+    Boolean hasSecondMenusTitle(@Param("ebaySecondMenus") EbaySecondMenus ebaySecondMenus);
+
 }

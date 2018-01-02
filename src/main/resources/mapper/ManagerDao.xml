@@ -64,7 +64,7 @@
     </delete>
 
     <!--增加一级菜单-->
-    <update id="newFirstMenus" parameterType="com.connext.ebayhelpcenter.model.EbayFirstMenus">
+    <update id="saveFirstMenus" parameterType="com.connext.ebayhelpcenter.model.EbayFirstMenus">
         INSERT INTO ebay_first_menus (first_serial,first_title)
         VALUES
         ((SELECT max_serial FROM
@@ -73,7 +73,7 @@
     </update>
 
     <!--增加二级菜单及其内容-->
-    <update id="newSecondMenus" parameterType="com.connext.ebayhelpcenter.model.EbaySecondMenus">
+    <update id="saveSecondMenus" parameterType="com.connext.ebayhelpcenter.model.EbaySecondMenus">
         INSERT INTO ebay_second_menus(second_serial,second_title,content,html,second_first_id)
         VALUES
         ((SELECT max_serial FROM
@@ -86,6 +86,7 @@
     <select id="hasFirstMenus" parameterType="int" resultType="boolean">
         <![CDATA[ SELECT count(*) FROM ebay_first_menus WHERE first_id = #{secondFirstId} ]]>
     </select>
+
 
     <!-- 根据主键更新一级菜单的序列号 By ZachZhang -->
     <update id="updateFirstSerialByID" parameterType="com.connext.ebayhelpcenter.model.EbayFirstMenus">
@@ -147,4 +148,19 @@
         SELECT * FROM ebay_first_menus
         WHERE first_id=#{firstId}
     </select>
+
+    <!--判断一级菜单标题是否存在-->
+    <select id="hasFirstMenusTitle" parameterType="java.lang.String" resultType="boolean">
+        <![CDATA[ SELECT count(*) FROM ebay_first_menus WHERE first_title = #{firstTitle} ]]>
+    </select>
+
+    <!--判断二级菜单标题是否存在-->
+    <select id="hasSecondMenusTitle" parameterType="com.connext.ebayhelpcenter.model.EbaySecondMenus" resultType="boolean">
+        <![CDATA[ SELECT count(*) FROM (
+        SELECT * FROM ebay_second_menus
+        WHERE second_first_id = #{ebaySecondMenus.secondFirstId}) t
+        WHERE t.second_title = #{ebaySecondMenus.secondTitle}]]>
+    </select>
+
+
 </mapper>
