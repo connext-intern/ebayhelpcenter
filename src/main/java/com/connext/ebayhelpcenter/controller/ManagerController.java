@@ -32,7 +32,7 @@ public class ManagerController {
     /**
      * @return 将二级菜单封装到一级菜单中，返回一级菜单的list
      */
-    @RequestMapping(value = "/listAllMenus", method = RequestMethod.GET)
+    @RequestMapping(value = "/listAllMenus", method = RequestMethod.POST)
     @ResponseBody
     public List<EbayFirstMenus> listAllTitle(HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", "*");//解决远端跨域访问不允许
