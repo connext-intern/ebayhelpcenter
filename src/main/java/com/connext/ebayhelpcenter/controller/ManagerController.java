@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-/*
-    管理员对菜单的增删改查操作类
+/**
+ *
  */
 @Controller
 @RequestMapping("/manager")
@@ -36,45 +36,47 @@ public class ManagerController {
         List<EbayFirstMenus> list = managerService.listAllTitle();
         return list;
     }
-    
-    /*
-        删除一级标题，需判断是否存在二级标题
-        @Param("firstId") 一级菜单id
+
+    /**
+     * 删除一级标题，需判断是否存在二级标题
+     * @param firstId 一级标题的id
+     * @return
      */
     @RequestMapping(value = "/deleteFirstMenu/{firstId}", method = RequestMethod.DELETE)
     @ResponseBody
-    public String deleteFirstMenu(@PathVariable("firstId") int firstId){
+    public String deleteFirstMenu(@PathVariable("firstId") int firstId) {
         log.info("ManagerController is deleteFirstMenu start...");
-        log.info("firstId-->{}",firstId);
+        log.info("firstId-->{}", firstId);
 
         //删除一级菜单
-        Boolean  isDeleteFirstMenu = this.managerService.deleteFirstMenu(firstId);
-        if(isDeleteFirstMenu){
+        Boolean isDeleteFirstMenu = this.managerService.deleteFirstMenu(firstId);
+        if (isDeleteFirstMenu) {
             log.info("一级菜单删除成功");
             return "deleteFirstMenuSuccess";
-        }else{
+        } else {
             log.info("一级菜单删除失败");
             return "deleteFirstMenuFail";
         }
     }
 
-    /*
-       删除二级标题对象
-       @Param("secondId") 二级菜单id
+    /**
+     *
+     * 删除二级标题对象
+     *@Param("secondId") 二级菜单id
     */
     @RequestMapping(value = "/deleteSecondMenu/{secondId}", method = RequestMethod.DELETE)
     @ResponseBody
-    public String deleteSecondMenu(@PathVariable("secondId") int secondId){
+    public String deleteSecondMenu(@PathVariable("secondId") int secondId) {
         log.info("ManagerController is deleteSecondMenu start...");
-        log.info("secondId-->{}",secondId);
+        log.info("secondId-->{}", secondId);
 
         Boolean isDeleteSecondMenu = this.managerService.deleteSecondMenu(secondId);
-        log.info("删除二级菜单对象-->"+isDeleteSecondMenu);
+        log.info("删除二级菜单对象-->" + isDeleteSecondMenu);
 
-        if(isDeleteSecondMenu){
+        if (isDeleteSecondMenu) {
             log.info("deleteSecondMenu success");
             return "deleteSecondMenuSuccess";
-        }else{
+        } else {
             log.info("deleteSecondMenu fail");
             return "deleteSecondMenuFail";
         }
@@ -82,21 +84,23 @@ public class ManagerController {
 
     /**
      * 新增一级菜单
+     *
      * @param firstTitle 菜单标题
      * @return
      */
     @RequestMapping(value = "newFirstMenus", method = RequestMethod.POST)
     @ResponseBody
-    public String newFirstMenus(String firstTitle){
+    public String newFirstMenus(String firstTitle) {
         managerService.newFirstMenus(firstTitle);
         return "ok";
     }
 
     /**
      * 新增二级标题及其内容
-     * @param secondTitle 菜单标题
-     * @param content 纯文本内容
-     * @param html 内容的html
+     *
+     * @param secondTitle   菜单标题
+     * @param content       纯文本内容
+     * @param html          内容的html
      * @param secondFirstId 对应一级菜单的编号
      * @return
      */
@@ -109,80 +113,88 @@ public class ManagerController {
         }
         return "newSecondMenusFail";
     }
+
     /**
      * 给一级菜单进行排序
      * ByZach Zhang
+     *
      * @param firstSerials
      * @return
      */
     @RequestMapping("/sortFirstTitle/{firstSerials}")
     @ResponseBody
-    public String sortFirstTitle(@PathVariable("firstSerials") Integer[] firstSerials){
-        log.info("传进来的新序列是：{}",firstSerials);
+    public String sortFirstTitle(@PathVariable("firstSerials") Integer[] firstSerials) {
+        log.info("传进来的新序列是：{}", firstSerials);
         managerService.sortFirstTitle(firstSerials);
         return "success";
     }
+
     /**
      * 给二级菜单进行排序
      * ByZach Zhang
+     *
      * @param secondSerials,firstId
      * @return
      */
     @RequestMapping("/sortSecondTitle/{firstId}/{secondSerials}")
     @ResponseBody
-    public String sortSecondTitle(@PathVariable("firstId") Integer firstId,@PathVariable("secondSerials") Integer[] secondSerials){
-        log.info("传进来的二级菜单们的一级菜单id和新的序列分别是：{},{}",firstId,secondSerials);
-        managerService.sortSecondTitle(firstId,secondSerials);
+    public String sortSecondTitle(@PathVariable("firstId") Integer firstId, @PathVariable("secondSerials") Integer[] secondSerials) {
+        log.info("传进来的二级菜单们的一级菜单id和新的序列分别是：{},{}", firstId, secondSerials);
+        managerService.sortSecondTitle(firstId, secondSerials);
         return "success";
     }
 
     /**
      * 给一级菜单进行排序测试
      * By Zach Zhang
+     *
      * @return
      */
     @RequestMapping("/sortFirstTitleTest")
     @ResponseBody
-    public String sortFirstTitleTest(){
+    public String sortFirstTitleTest() {
         //此处写死一个数组进行测试，
-        Integer[] firstSerials={2,1,4,3,5,6};
-        log.info("传进来的新序列是：{}",firstSerials);
+        Integer[] firstSerials = {2, 1, 4, 3, 5, 6};
+        log.info("传进来的新序列是：{}", firstSerials);
         managerService.sortFirstTitle(firstSerials);
         return "success";
     }
+
     /**
      * 给二级菜单进行排序测试
      * ByZach Zhang
+     *
      * @return
      */
     @RequestMapping("/sortSecondTitleTest")
     @ResponseBody
-    public String sortSecondTitleTest(){
+    public String sortSecondTitleTest() {
         int firstId = 2;
-        Integer[] secondSerials = {1,2,3,5,6,7,4};
-        log.info("传进来的二级菜单们的一级菜单id和新的序列分别是：{},{}",firstId,secondSerials);
-        managerService.sortSecondTitle(firstId,secondSerials);
+        Integer[] secondSerials = {1, 2, 3, 5, 6, 7, 4};
+        log.info("传进来的二级菜单们的一级菜单id和新的序列分别是：{},{}", firstId, secondSerials);
+        managerService.sortSecondTitle(firstId, secondSerials);
         return "success";
     }
 
     /**
      * 修改一级菜单标题
      */
-    @RequestMapping(value = "updateFirst",method = RequestMethod.PUT)
+    @RequestMapping(value = "updateFirst", method = RequestMethod.PUT)
     @ResponseBody
-    public String updateFirst(Integer firstSerial,String firstTitle,HttpServletRequest request){
-        managerService.updateFirst(firstSerial,firstTitle);
+    public String updateFirst(Integer firstSerial, String firstTitle, HttpServletRequest request) {
+        managerService.updateFirst(firstSerial, firstTitle);
         return "success to update";
     }
 
 
     /**
      * 查询所有一级菜单标题
+     *
      * @return
      */
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public String showAllFirst(){
+    public String showAllFirst() {
         List<EbayFirstMenus> ebayFirstMenu = managerService.showAllFirst();
         return "success";
     }

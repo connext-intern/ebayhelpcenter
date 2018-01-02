@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.connext.ebayhelpcenter.dao.ArticleDao">
+    <select id="queryKeyWords" resultType="com.connext.ebayhelpcenter.model.EbaySecondMenus">
+        select second_title,content,second_id
+        from ebay_second_menus
+        where content like '%${keyword}%'OR second_title like '%${keyword}%'
+        ORDER BY second_serial
+    </select>
+    <select id="countByKeyword" parameterType="String" resultType="int">
+          select count(*) from ebay_second_menus
+          where content like '%${keyword}%'OR second_title like '%${keyword}%'
+    </select>
+    <select id="queryContent" resultType="com.connext.ebayhelpcenter.model.EbaySecondMenus">
+        select second_title,html from ebay_second_menus where second_id=#{VALUE}
+    </select>
+</mapper>
