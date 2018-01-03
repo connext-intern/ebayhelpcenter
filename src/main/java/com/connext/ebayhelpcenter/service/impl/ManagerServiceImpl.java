@@ -176,10 +176,20 @@ public class ManagerServiceImpl implements ManagerService {
          */
         @Override
         public void sortFirstTitle(Integer[] firstSerials) {
-            //先按序列号排序查出所有的一级菜单
+            //1.先判断传来的新一级菜单序列号数组是否为空
+            if(firstSerials==null){
+                throw new ServiceException("传来的新一级菜单序列号数组为空！");
+            }
+            //2.再按序列号排序查出所有的一级菜单
             List<EbayFirstMenus> ebayFirstMenuses = managerDao.listAllFirstTitle();
+            //3.再判断从数据库查出的所有一级菜单长度是否为0以及是否等于传进来的数组长度
+            if (ebayFirstMenuses==null){
+                throw new ServiceException("从数据库取出的一级菜单为空！");
+            }else if (ebayFirstMenuses.size()!=firstSerials.length){
+                throw new ServiceException("新旧序列号数组长度不一样！");
+            }
             int i=0;
-            //使用for循环更新序列号
+            //4.使用for循环更新序列号
             for(EbayFirstMenus ebayFirstMenus:ebayFirstMenuses) {
                 ebayFirstMenus.setFirstSerial(firstSerials[i]);
                 log.info(ebayFirstMenus.toString());
@@ -196,8 +206,20 @@ public class ManagerServiceImpl implements ManagerService {
      */
     @Override
     public void sortSecondTitle(Integer firstId, Integer[] secondSerials) {
-        //先根据一级id查出所有的二级菜单（按原来的序列号排序）
+        //判断是否为空
+        if(firstId==null){
+            throw new ServiceException("传进来的一级菜单id为空！");
+        }
+        if (secondSerials==null){
+            throw new ServiceException("传进来的二级菜单序列号数组为空！");
+        }
+        //根据一级id查出所有的二级菜单（按原来的序列号排序）
         List<EbaySecondMenus> ebaySecondMenuses = managerDao.listAllSencondTitleByFirstId(firstId);
+        if (ebaySecondMenuses==null){
+            throw new ServiceException("从数据库取出的二级菜单为空！");
+        }else if (ebaySecondMenuses.size()!=secondSerials.length){
+            throw new ServiceException("新旧序列号数组长度不一样！");
+        }
         int i=0;
         //使用for循环更新序列号
         for(EbaySecondMenus ebaySecondMenus:ebaySecondMenuses) {
@@ -214,7 +236,7 @@ public class ManagerServiceImpl implements ManagerService {
      */
     @Override
     public List<EbayFirstMenus> showAllFirst() {
-        return managerDao.showAllFirst();
+        return managerDao.listAllFirstTitle();
     }
 
     /**
@@ -262,8 +284,8 @@ public class ManagerServiceImpl implements ManagerService {
      *
      */
     @Override
-    public EbaySecondMenus findTitleById(Integer id) {
-        return managerDao.findTitleById(id);
+    public List<EbaySecondMenus> findTitleById(Integer id) {
+        return managerDao.listAllSencondTitleByFirstId(id);
     }
 
     /**

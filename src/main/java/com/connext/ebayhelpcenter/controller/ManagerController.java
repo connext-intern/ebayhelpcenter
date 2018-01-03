@@ -5,7 +5,6 @@ import com.connext.ebayhelpcenter.model.EbayFirstMenus;
 import com.connext.ebayhelpcenter.model.EbaySecondMenus;
 import com.connext.ebayhelpcenter.util.JsonResult;
 import com.connext.ebayhelpcenter.service.ManagerService;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -115,12 +114,13 @@ public class ManagerController {
      * @param firstSerials
      * @return
      */
-    @RequestMapping("/sortFirstTitle/{firstSerials}")
+    @RequestMapping(value = "/sortFirstTitle/{firstSerials}",method = RequestMethod.POST)
     @ResponseBody
-    public String sortFirstTitle(@PathVariable("firstSerials") Integer[] firstSerials){
+    public JsonResult sortFirstTitle(@PathVariable("firstSerials") Integer[] firstSerials,HttpServletResponse response){
+        response.setHeader("Access-Control-Allow-Origin", "*");
         log.info("传进来的新序列是：{}",firstSerials);
         managerService.sortFirstTitle(firstSerials);
-        return "success";
+        return new JsonResult();
     }
     /**
      * 给二级菜单进行排序
@@ -128,12 +128,13 @@ public class ManagerController {
      * @param secondSerials,firstId
      * @return
      */
-    @RequestMapping("/sortSecondTitle/{firstId}/{secondSerials}")
+    @RequestMapping(value = "/sortSecondTitle/{firstId}/{secondSerials}",method = RequestMethod.POST)
     @ResponseBody
-    public String sortSecondTitle(@PathVariable("firstId") Integer firstId,@PathVariable("secondSerials") Integer[] secondSerials){
+    public JsonResult sortSecondTitle(@PathVariable("firstId") Integer firstId,@PathVariable("secondSerials") Integer[] secondSerials,HttpServletResponse response){
+        response.setHeader("Access-Control-Allow-Origin", "*");
         log.info("传进来的二级菜单们的一级菜单id和新的序列分别是：{},{}",firstId,secondSerials);
         managerService.sortSecondTitle(firstId,secondSerials);
-        return "success";
+        return new JsonResult();
     }
 
 
@@ -153,9 +154,9 @@ public class ManagerController {
      * 查询所有一级菜单标题
      * @return
      */
-    @RequestMapping(value = "showAllFirst",method = RequestMethod.POST)
+    @RequestMapping(value = "/showAllFirst",method = RequestMethod.POST)
     @ResponseBody
-    public List<EbayFirstMenus> showAllFirst(HttpServletResponse response) {
+    public List<EbayFirstMenus> showAllFirst(HttpServletResponse response){
         response.setHeader("Access-Control-Allow-Origin", "*");
         List<EbayFirstMenus> ebayFirstMenu = managerService.showAllFirst();
         return ebayFirstMenu;
@@ -166,13 +167,11 @@ public class ManagerController {
     /**
      *  通过一级菜单的id（second_id）查询二级菜单对应的标题
      */
-
     @RequestMapping("/listSecondTitle/{firstId}")
     @ResponseBody
-    public EbaySecondMenus listSecondTitle(@PathVariable("firstId") Integer firstId,HttpServletResponse response) {
+    public List<EbaySecondMenus> listSecondTitle(@PathVariable("firstId") Integer firstId,HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", "*");
-        EbaySecondMenus list = managerService.findTitleById(firstId);
-        
+        List<EbaySecondMenus> list = managerService.findTitleById(firstId);
         return list;
     }
 

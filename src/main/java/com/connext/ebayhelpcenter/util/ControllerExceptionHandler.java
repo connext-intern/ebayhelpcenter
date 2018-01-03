@@ -22,5 +22,4 @@ public class ControllerExceptionHandler {
 		//this.state=ERROR;
 		//this.message=e.getMessage();
 	}
-
 }

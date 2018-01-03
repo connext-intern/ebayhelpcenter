@@ -83,7 +83,7 @@ public interface ManagerService {
      *通过first_id查询二级标题
      *
      */
-    EbaySecondMenus findTitleById(Integer id);
+    List<EbaySecondMenus> findTitleById(Integer id);
 
     /**
      *
