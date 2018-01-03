@@ -31,7 +31,7 @@ public class ManagerController {
     /**
      * @return 将二级菜单封装到一级菜单中，返回一级菜单的list
      */
-    @RequestMapping(value = "/listAllMenus", method = RequestMethod.POST)
+    @RequestMapping(value = "/listAllMenus", method = RequestMethod.POST,produces ="application/json;charset=UTF-8" )
     @ResponseBody
     public JsonResult listAllTitle(HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", "*");//解决远端跨域访问不允许
