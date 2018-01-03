@@ -3,8 +3,8 @@ package com.connext.ebayhelpcenter.service.impl;
 import com.connext.ebayhelpcenter.dao.ManagerDao;
 import com.connext.ebayhelpcenter.model.EbayFirstMenus;
 import com.connext.ebayhelpcenter.model.EbaySecondMenus;
-import com.connext.ebayhelpcenter.util.ServiceException;
 import com.connext.ebayhelpcenter.service.ManagerService;
+import com.connext.ebayhelpcenter.util.ServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,18 +14,17 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- *  管理员接口实现类
+ * 管理员接口实现类
  */
 @Service
 public class ManagerServiceImpl implements ManagerService {
     private static Logger log = LoggerFactory.getLogger(ManagerServiceImpl.class);
-    private static final int TITLE_MAX=8;
+    private static final int FIRST_TITLE_MAX = 8;
 
     @Autowired
     private ManagerDao managerDao;
 
     /**
-     *
      * @return 查询出所有的一级二级菜单，并按照序列号排序
      */
     @Override
@@ -35,6 +34,7 @@ public class ManagerServiceImpl implements ManagerService {
 
     /**
      * 实现 删除一级菜单接口
+     *
      * @param firstId
      * @return
      */
@@ -44,40 +44,40 @@ public class ManagerServiceImpl implements ManagerService {
         log.info("ManagerServiceImpl is deleteFirstMenu start...");
 
         //1.判断传入值是否为空
-        if(firstId == 0){
+        if (firstId == 0) {
             throw new ServiceException("firstId is null");
         }
-        log.info("firstId-->{}",firstId);
+        log.info("firstId-->{}", firstId);
 
         //2.判断该一级菜单是否存在
         Boolean hasFirstMenu = this.managerDao.hasFirstMenu(firstId);
-        log.info("hasFirstMenu-->"+hasFirstMenu);
+        log.info("hasFirstMenu-->" + hasFirstMenu);
 
-        if(!hasFirstMenu){
+        if (!hasFirstMenu) {
             log.info("firstMenu not exist");
             throw new ServiceException("firstMenu not exist");
         }
 
         //3.判断一级菜单下是否存在二级菜单
         Boolean isFirstHasSecondMenus = this.managerDao.firstHasSecondMenus(firstId);
-        log.info("isFirstHasSecondMenus-->"+isFirstHasSecondMenus);
-        if(isFirstHasSecondMenus){
+        log.info("isFirstHasSecondMenus-->" + isFirstHasSecondMenus);
+        if (isFirstHasSecondMenus) {
             log.info("该一级菜单下存在二级菜单，准备删除二级菜单");
             Boolean b1 = this.managerDao.deleteSecondMenusInfoFromFirst(firstId);
             Boolean b2 = this.managerDao.deleteFirstMenuInfo(firstId);
-            if(b1 && b2){
+            if (b1 && b2) {
                 log.info("两张表同时删除成功");
                 return true;
-            }else{
+            } else {
                 log.info("b1或b2删除操作失败");
                 throw new ServiceException("transaction error");
             }
-        }else{
+        } else {
             log.info("该一级菜单下不存在二级菜单,直接删除一级菜单即可");
             Boolean b = this.managerDao.deleteFirstMenuInfo(firstId);
-            if(b){
+            if (b) {
                 return true;
-            }else {
+            } else {
                 throw new ServiceException("delete firstMenu fail");
             }
         }
@@ -85,6 +85,7 @@ public class ManagerServiceImpl implements ManagerService {
 
     /**
      * 实现 删除二级菜单接口
+     *
      * @param secondId
      * @return
      */
@@ -93,26 +94,26 @@ public class ManagerServiceImpl implements ManagerService {
         log.info("ManagerServiceImpl is deleteSecondMenu start...");
 
         //1.判断传入值是否为空
-        if(secondId == 0){
+        if (secondId == 0) {
             throw new ServiceException("secondId id null");
         }
-        log.info("secondId-->{}",secondId);
+        log.info("secondId-->{}", secondId);
 
         //2.判断该二级菜单是否存在
         Boolean hasSecondMenu = this.managerDao.hasSecondMenu(secondId);
-        log.info("hasSecondMenu-->"+hasSecondMenu);
+        log.info("hasSecondMenu-->" + hasSecondMenu);
 
-        if(!hasSecondMenu){
+        if (!hasSecondMenu) {
             log.info("secondMenu not exist");
             throw new ServiceException("secondMenu not exist");
         }
 
         log.info("存在该二级菜单,准备删除");
         Boolean isDeleteSecondMenu = this.managerDao.deleteSecondMenuInfo(secondId);
-        if(isDeleteSecondMenu){
+        if (isDeleteSecondMenu) {
             log.info("该二级菜单 删除成功");
             return true;
-        }else{
+        } else {
             log.info("该二级菜单 删除失败");
             throw new ServiceException("delete secondMenu fail");
         }
@@ -121,17 +122,18 @@ public class ManagerServiceImpl implements ManagerService {
 
     /**
      * 增加一级菜单
+     *
      * @param firstTitle 菜单标题
      */
     @Override
     public void saveFirstMenus(String firstTitle) {
-        if (firstTitle.trim().isEmpty()){
+        if (firstTitle.trim().isEmpty()) {
             throw new ServiceException("标题不能为空");
         }
-        if (firstTitle.length() > TITLE_MAX){
+        if (firstTitle.length() > FIRST_TITLE_MAX) {
             throw new ServiceException("标题字数不能多于8");
         }
-        if (managerDao.hasFirstMenusTitle(firstTitle)){
+        if (managerDao.hasFirstMenusTitle(firstTitle)) {
             throw new ServiceException("标题已存在");
         }
         EbayFirstMenus ebayFirstMenus = new EbayFirstMenus();
@@ -141,20 +143,21 @@ public class ManagerServiceImpl implements ManagerService {
 
     /**
      * 增加二级菜单及其内容
-     * @param secondTitle 菜单标题
-     * @param content 纯文本内容
-     * @param html 内容的html
+     *
+     * @param secondTitle   菜单标题
+     * @param content       纯文本内容
+     * @param html          内容的html
      * @param secondFirstId 对应一级菜单的编号
      */
     @Override
     public void saveSecondMenus(String secondTitle, String content, String html, int secondFirstId) {
-        if (secondTitle.trim().isEmpty()){
+        if (secondTitle.trim().isEmpty()) {
             throw new ServiceException("标题不能为空");
         }
-        if (secondTitle.length() > TITLE_MAX){
+        if (secondTitle.length() > FIRST_TITLE_MAX) {
             throw new ServiceException("标题字数不能多于8");
         }
-        if (!managerDao.hasFirstMenus(secondFirstId)){
+        if (!managerDao.hasFirstMenus(secondFirstId)) {
             throw new ServiceException("一级菜单不存在");
         }
         EbaySecondMenus ebaySecondMenus = new EbaySecondMenus();
@@ -163,66 +166,68 @@ public class ManagerServiceImpl implements ManagerService {
         ebaySecondMenus.setHtml(html);
         ebaySecondMenus.setSecondFirstId(secondFirstId);
 
-        if (managerDao.hasSecondMenusTitle(ebaySecondMenus)){
+        if (managerDao.hasSecondMenusTitle(ebaySecondMenus)) {
             throw new ServiceException("标题已存在");
         }
         managerDao.saveSecondMenus(ebaySecondMenus);
     }
 
-        /**
-         *  对一级菜单进行排序的方法
-         *  By Zach Zhang
-         *  @Param firstSerials
-         */
-        @Override
-        public void sortFirstTitle(Integer[] firstSerials) {
-            //1.先判断传来的新一级菜单序列号数组是否为空
-            if(firstSerials==null){
-                throw new ServiceException("传来的新一级菜单序列号数组为空！");
-            }
-            //2.再按序列号排序查出所有的一级菜单
-            List<EbayFirstMenus> ebayFirstMenuses = managerDao.listAllFirstTitle();
-            //3.再判断从数据库查出的所有一级菜单长度是否为0以及是否等于传进来的数组长度
-            if (ebayFirstMenuses==null){
-                throw new ServiceException("从数据库取出的一级菜单为空！");
-            }else if (ebayFirstMenuses.size()!=firstSerials.length){
-                throw new ServiceException("新旧序列号数组长度不一样！");
-            }
-            int i=0;
-            //4.使用for循环更新序列号
-            for(EbayFirstMenus ebayFirstMenus:ebayFirstMenuses) {
-                ebayFirstMenus.setFirstSerial(firstSerials[i]);
-                log.info(ebayFirstMenus.toString());
-                managerDao.updateFirstSerialByID(ebayFirstMenus);
-                i++;
-            }
+    /**
+     * 对一级菜单进行排序的方法
+     * By Zach Zhang
+     *
+     * @Param firstSerials
+     */
+    @Override
+    public void sortFirstTitle(Integer[] firstSerials) {
+        //1.先判断传来的新一级菜单序列号数组是否为空
+        if (firstSerials == null) {
+            throw new ServiceException("传来的新一级菜单序列号数组为空！");
         }
+        //2.再按序列号排序查出所有的一级菜单
+        List<EbayFirstMenus> ebayFirstMenuses = managerDao.listAllFirstTitle();
+        //3.再判断从数据库查出的所有一级菜单长度是否为0以及是否等于传进来的数组长度
+        if (ebayFirstMenuses == null) {
+            throw new ServiceException("从数据库取出的一级菜单为空！");
+        } else if (ebayFirstMenuses.size() != firstSerials.length) {
+            throw new ServiceException("新旧序列号数组长度不一样！");
+        }
+        int i = 0;
+        //4.使用for循环更新序列号
+        for (EbayFirstMenus ebayFirstMenus : ebayFirstMenuses) {
+            ebayFirstMenus.setFirstSerial(firstSerials[i]);
+            log.info(ebayFirstMenus.toString());
+            managerDao.updateFirstSerialByID(ebayFirstMenus);
+            i++;
+        }
+    }
 
     /**
      * 对二级菜单进行排序
      * By Zach Zhang
+     *
      * @param firstId
      * @param secondSerials
      */
     @Override
     public void sortSecondTitle(Integer firstId, Integer[] secondSerials) {
         //判断是否为空
-        if(firstId==null){
+        if (firstId == null) {
             throw new ServiceException("传进来的一级菜单id为空！");
         }
-        if (secondSerials==null){
+        if (secondSerials == null) {
             throw new ServiceException("传进来的二级菜单序列号数组为空！");
         }
         //根据一级id查出所有的二级菜单（按原来的序列号排序）
         List<EbaySecondMenus> ebaySecondMenuses = managerDao.listAllSencondTitleByFirstId(firstId);
-        if (ebaySecondMenuses==null){
+        if (ebaySecondMenuses == null) {
             throw new ServiceException("从数据库取出的二级菜单为空！");
-        }else if (ebaySecondMenuses.size()!=secondSerials.length){
+        } else if (ebaySecondMenuses.size() != secondSerials.length) {
             throw new ServiceException("新旧序列号数组长度不一样！");
         }
-        int i=0;
+        int i = 0;
         //使用for循环更新序列号
-        for(EbaySecondMenus ebaySecondMenus:ebaySecondMenuses) {
+        for (EbaySecondMenus ebaySecondMenus : ebaySecondMenuses) {
             ebaySecondMenus.setSecondSerial(secondSerials[i]);
             log.info(ebaySecondMenus.toString());
             managerDao.updateSecondSerialByID(ebaySecondMenus);
@@ -232,6 +237,7 @@ public class ManagerServiceImpl implements ManagerService {
 
     /**
      * 查找所有一级菜单的标题
+     *
      * @return
      */
     @Override
@@ -241,37 +247,52 @@ public class ManagerServiceImpl implements ManagerService {
 
     /**
      * 修改一级标题
+     *
      * @param firstSerial
      * @param
      */
     @Override
-    public String updateFirst(Integer firstSerial, String firstTitle,Integer firstId) {
-        String str = "";
-        if (firstTitle == null) {
-            log.info("标题不得为空");
-            str = "fail";
-        } else if (firstId == null || firstSerial == null || firstTitle == null) {
+    public void updateFirst(Integer firstSerial, String firstTitle, Integer firstId) {
+        if (firstId == null || firstSerial == null || firstTitle == "") {
             log.info("firstid或者serial不能为空或者title不能为空");
-            str = "fail";
-        } else if (firstTitle.length() > 8) {
+            throw new ServiceException("其中有一个为空");
+        } else if (firstTitle.length() > FIRST_TITLE_MAX) {
             log.info("标题字数不能多余八个字");
-            str = "fail";
-        } else if (firstTitle.length() < 8 && firstId != null && firstSerial != null) {
+            throw new ServiceException("标题字数大于八个字");
+        } else if (firstTitle.length() < FIRST_TITLE_MAX && firstId != null && firstSerial != null) {
             EbayFirstMenus ebayFirstMenus = managerDao.findFirstId(firstId);
             if (ebayFirstMenus != null) {
-                managerDao.updateFirst(firstSerial, firstTitle, firstId);
-                str = "success";
+                boolean hasFirstmenustitle = managerDao.hasFirstMenusTitle(firstTitle);
+                if (!hasFirstmenustitle) {
+                    managerDao.updateFirst(firstSerial, firstTitle, firstId);
+                    throw new ServiceException("修改成功");
+                } else {
+                    throw new ServiceException("此标题已经存在");
+                }
             } else {
                 log.info("没有找到对应的id");
+                throw new ServiceException("没有找到对应的id");
             }
         }
-        return str;
     }
 
     /**
+     * 根据title关键字模糊查找一级菜单所有内容 zhangyang
      *
-     *通过second__id查询二级标题对应的内容
-     *
+     * @param firstTitle
+     * @return
+     */
+    @Override
+    public List<EbayFirstMenus> searchFirstByTitle(String firstTitle) {
+        if (firstTitle != "") {
+            return managerDao.searchFirstByTitle(firstTitle);
+        } else {
+            throw new ServiceException("关键字不能为空");
+        }
+    }
+
+    /**
+     * 通过second__id查询二级标题对应的内容
      */
     @Override
     public EbaySecondMenus findContentById(Integer id) {
@@ -279,9 +300,7 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     /**
-     *
-     *通过second_id查询二级标题
-     *
+     * 通过second_id查询二级标题
      */
     @Override
     public List<EbaySecondMenus> findTitleById(Integer id) {
@@ -289,43 +308,35 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     /**
-     *
-     *通过id编辑二级菜单的标题
-     *
+     * 通过id编辑二级菜单的标题
      */
     @Override
-    public void updateSecondTitle(Integer id,String title) {
-        managerDao.updateSecondTitle(id,title);
+    public void updateSecondTitle(Integer id, String title) {
+        managerDao.updateSecondTitle(id, title);
     }
 
     /**
-     *
-     *通过id编辑二级菜单的内容
-     *
+     * 通过id编辑二级菜单的内容
      */
     @Override
-    public void updateSecondContent(Integer id,String content) {
-        managerDao.updateSecondContent(id,content);
+    public void updateSecondContent(Integer id, String content) {
+        managerDao.updateSecondContent(id, content);
     }
 
     /**
-     *
-     *通过id编辑二级菜单的html
-     *
+     * 通过id编辑二级菜单的html
      */
     @Override
-    public void updateSecondHtml(Integer id,String html) {
-        managerDao.updateSecondHtml(id,html);
+    public void updateSecondHtml(Integer id, String html) {
+        managerDao.updateSecondHtml(id, html);
     }
 
     /**
-     *
-     *通过id编辑二级菜单的排序号
-     *
+     * 通过id编辑二级菜单的排序号
      */
     @Override
-    public void updateSecondSerial(Integer id,Integer second_serial) {
-        managerDao.updateSecondSerial(id,second_serial);
+    public void updateSecondSerial(Integer id, Integer second_serial) {
+        managerDao.updateSecondSerial(id, second_serial);
     }
 
 }

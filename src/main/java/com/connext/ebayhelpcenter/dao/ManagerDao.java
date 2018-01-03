@@ -103,17 +103,24 @@ public interface ManagerDao {
     void updateSecondSerialByID(EbaySecondMenus ebaySecondMenus);
 
     /**
-     * 查找一级菜单的标题
+     * 查找一级菜单的标题 zhangyang
      * @return
      */
     List<EbayFirstMenus> showAllFirst();
 
     /**
-     * firstSerial 是 标题排序的顺序
+     * firstSerial 是 标题排序的顺序 by zhangyang
      * firstId 是title的id
      * 修改标题
      */
     void updateFirst(@Param("firstSerial")int firstSerial,@Param("firstTitle")String firstTitle,@Param("firstId")int firstId);
+
+    /**
+     * 使用title模糊查找一级菜单 byzhangyang
+     * @param firstTitle
+     * @return
+     */
+    List<EbayFirstMenus> searchFirstByTitle(@Param("firstTitle")String firstTitle);
 
     /**
      *
