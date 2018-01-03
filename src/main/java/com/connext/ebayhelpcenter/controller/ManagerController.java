@@ -33,10 +33,10 @@ public class ManagerController {
      */
     @RequestMapping(value = "/listAllMenus", method = RequestMethod.POST)
     @ResponseBody
-    public List<EbayFirstMenus> listAllTitle(HttpServletResponse response) {
+    public JsonResult listAllTitle(HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", "*");//解决远端跨域访问不允许
         List<EbayFirstMenus> list = managerService.listAllTitle();
-        return list;
+        return new JsonResult(list);
     }
 
     /**
