@@ -47,38 +47,38 @@ public class ManagerServiceImpl implements ManagerService {
         if (firstId == 0) {
             throw new ServiceException("firstId is null");
         }
-        log.info("firstId-->{}", firstId);
 
         //2.判断该一级菜单是否存在
         Boolean hasFirstMenu = this.managerDao.hasFirstMenu(firstId);
-        log.info("hasFirstMenu-->" + hasFirstMenu);
 
-        if (!hasFirstMenu) {
-            log.info("firstMenu not exist");
-            throw new ServiceException("firstMenu not exist");
+        if(!hasFirstMenu){
+            log.info("firstId:{},firstMenu not exist",firstId);
+            throw new ServiceException(String.format("firstId:{},firstMenu not exist",firstId));
         }
 
         //3.判断一级菜单下是否存在二级菜单
         Boolean isFirstHasSecondMenus = this.managerDao.firstHasSecondMenus(firstId);
-        log.info("isFirstHasSecondMenus-->" + isFirstHasSecondMenus);
-        if (isFirstHasSecondMenus) {
-            log.info("该一级菜单下存在二级菜单，准备删除二级菜单");
+
+        if(isFirstHasSecondMenus){
+            log.info("一级菜单:{},存在二级菜单,需操作两张表",firstId);
             Boolean b1 = this.managerDao.deleteSecondMenusInfoFromFirst(firstId);
             Boolean b2 = this.managerDao.deleteFirstMenuInfo(firstId);
-            if (b1 && b2) {
-                log.info("两张表同时删除成功");
+            if(b1 && b2){
+                log.info("firstId:{},两张表同时删除成功",firstId);
                 return true;
-            } else {
-                log.info("b1或b2删除操作失败");
-                throw new ServiceException("transaction error");
+            }else{
+                log.info("firstId:{},有一张表删除操作失败",firstId);
+                throw new ServiceException(String.format("firstId:{},transaction error",firstId));
             }
-        } else {
-            log.info("该一级菜单下不存在二级菜单,直接删除一级菜单即可");
+        }else{
+            log.info("一级菜单:{},不存在二级菜单,直接删除一级菜单即可",firstId);
             Boolean b = this.managerDao.deleteFirstMenuInfo(firstId);
-            if (b) {
+            if(b){
+                log.info("firstId:{},delete firstMenu success",firstId);
                 return true;
-            } else {
-                throw new ServiceException("delete firstMenu fail");
+            }else {
+                log.info("firstId:{},delete firstMenu fail",firstId);
+                throw new ServiceException(String.format("firstId:{},delete firstMenu fail",firstId));
             }
         }
     }
@@ -97,25 +97,23 @@ public class ManagerServiceImpl implements ManagerService {
         if (secondId == 0) {
             throw new ServiceException("secondId id null");
         }
-        log.info("secondId-->{}", secondId);
 
         //2.判断该二级菜单是否存在
         Boolean hasSecondMenu = this.managerDao.hasSecondMenu(secondId);
-        log.info("hasSecondMenu-->" + hasSecondMenu);
 
-        if (!hasSecondMenu) {
-            log.info("secondMenu not exist");
-            throw new ServiceException("secondMenu not exist");
+        if(!hasSecondMenu){
+            log.info("secondId:{},secondMenu not exist",secondId);
+            throw new ServiceException(String.format("secondId:{},secondMenu not exist",secondId));
         }
 
-        log.info("存在该二级菜单,准备删除");
         Boolean isDeleteSecondMenu = this.managerDao.deleteSecondMenuInfo(secondId);
-        if (isDeleteSecondMenu) {
-            log.info("该二级菜单 删除成功");
+
+        if(isDeleteSecondMenu){
+            log.info("secondId:{}, delete success",secondId);
             return true;
-        } else {
-            log.info("该二级菜单 删除失败");
-            throw new ServiceException("delete secondMenu fail");
+        }else{
+            log.info("secondId:{}, delete fail",secondId);
+            throw new ServiceException(String.format("secondId:{},delete secondMenu fail",secondId));
         }
 
     }

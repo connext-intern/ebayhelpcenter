@@ -51,9 +51,9 @@ public class ManagerController {
         log.info("ManagerController is deleteFirstMenu start...");
 
         //删除一级菜单
-        Boolean isDeleteFirstMenu = this.managerService.deleteFirstMenu(firstId);
-        if (!isDeleteFirstMenu) {
-            log.info("deleteFirstMenu fail");
+        Boolean  isDeleteFirstMenu = this.managerService.deleteFirstMenu(firstId);
+        if(!isDeleteFirstMenu){
+            log.info("firstId:{},deleteFirstMenu fail",firstId);
         }
         return new JsonResult();
     }
@@ -71,10 +71,9 @@ public class ManagerController {
         log.info("ManagerController is deleteSecondMenu start...");
 
         Boolean isDeleteSecondMenu = this.managerService.deleteSecondMenu(secondId);
-        log.info("删除二级菜单对象-->" + isDeleteSecondMenu);
 
-        if (!isDeleteSecondMenu) {
-            log.info("deleteSecondMenu fail");
+        if(!isDeleteSecondMenu){
+            log.info("secondId:{},deleteSecondMenu fail",secondId);
         }
         return new JsonResult();
     }
@@ -85,9 +84,9 @@ public class ManagerController {
      * @param firstTitle 菜单标题
      * @return
      */
-    @RequestMapping(value = "newFirstMenus", method = RequestMethod.POST)
+    @RequestMapping(value = "saveFirstMenus", method = RequestMethod.POST)
     @ResponseBody
-    public JsonResult newFirstMenus(HttpServletResponse response, String firstTitle) {
+    public JsonResult saveFirstMenus(HttpServletResponse response, String firstTitle){
         response.setHeader("Access-Control-Allow-Origin", "*");
         managerService.saveFirstMenus(firstTitle);
         return new JsonResult();
@@ -102,9 +101,9 @@ public class ManagerController {
      * @param secondFirstId 对应一级菜单的编号
      * @return
      */
-    @RequestMapping(value = "newSecondMenus", method = RequestMethod.POST)
+    @RequestMapping(value = "saveSecondMenus", method = RequestMethod.POST)
     @ResponseBody
-    public JsonResult newSecondMenus(HttpServletResponse response, String secondTitle, String content, String html, int secondFirstId) {
+    public JsonResult saveSecondMenus(HttpServletResponse response,String secondTitle, String content, String html, int secondFirstId) {
         response.setHeader("Access-Control-Allow-Origin", "*");
         managerService.saveSecondMenus(secondTitle, content, html, secondFirstId);
         return new JsonResult();

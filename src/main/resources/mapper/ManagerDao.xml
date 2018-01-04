@@ -103,6 +103,7 @@
         </set>
         WHERE first_id = #{firstId,jdbcType=INTEGER}
     </update>
+
     <!-- 根据主键更新二级菜单的序列号 By ZachZhang -->
     <update id="updateSecondSerialByID" parameterType="com.connext.ebayhelpcenter.model.EbaySecondMenus">
         UPDATE ebay_second_menus
@@ -113,41 +114,50 @@
         </set>
         WHERE second_id = #{secondId,jdbcType=INTEGER}
     </update>
+
     <!-- 查找一级菜单标题 zhangyang -->
     <select id="showAllFirst" resultType="com.connext.ebayhelpcenter.model.EbayFirstMenus">
         SELECT * FROM ebay_first_menus
         ORDER BY first_serial
     </select>
+
     <!-- 根据firstid修改标题  zhangyang-->
     <update id="updateFirst" parameterType="com.connext.ebayhelpcenter.model.EbayFirstMenus">
         UPDATE ebay_first_menus SET first_title =#{firstTitle},first_serial=#{firstSerial}
         WHERE first_id = #{firstId}
     </update>
+
     <!-- 查找一级标题中的id  zhangyang-->
     <select id="findFirstId" resultType="com.connext.ebayhelpcenter.model.EbayFirstMenus">
         SELECT * FROM ebay_first_menus
         WHERE first_id=#{firstId}
     </select>
+
     <!-- 根据title关键字模糊查找一级菜单所有内容-->
     <select id="searchFirstByTitle" resultType="com.connext.ebayhelpcenter.model.EbayFirstMenus">
         SELECT * FROM ebay_first_menus WHERE first_title LIKE '%${firstTitle}%';
     </select>
+
     <!-- 根据second_id查找标题 -->
     <select id="findTitleById" resultType="com.connext.ebayhelpcenter.model.EbaySecondMenus">
         SELECT second_title FROM ebay_second_menus WHERE second_id = #{id}
     </select>
+
     <!-- 根据second_id查找内容 -->
     <select id="findContentById" resultType="com.connext.ebayhelpcenter.model.EbaySecondMenus">
         SELECT content,html FROM ebay_second_menus WHERE second_id = #{id}
     </select>
+
     <!-- 根据second_id修改二级标题 -->
     <update id="updateSecondTitle" parameterType="com.connext.ebayhelpcenter.model.EbaySecondMenus">
         UPDATE ebay_second_menus SET second_title = #{title} WHERE second_id = #{id}
     </update>
+
     <!-- 根据second_id修改二级标题对应的内容 -->
     <update id="updateSecondContent" parameterType="com.connext.ebayhelpcenter.model.EbaySecondMenus">
         UPDATE ebay_second_menus SET content = #{content} WHERE second_id = #{id}
     </update>
+
     <!-- 根据second_id修改二级标题对应的html -->
     <update id="updateSecondHtml" parameterType="com.connext.ebayhelpcenter.model.EbaySecondMenus">
         UPDATE ebay_second_menus SET html = #{html} WHERE second_id = #{id}
@@ -157,7 +167,6 @@
     <update id="updateSecondSerial" parameterType="com.connext.ebayhelpcenter.model.EbaySecondMenus">
         UPDATE ebay_second_menus SET second_serial = #{second_serial} WHERE second_id = #{id}
     </update>
-
 
     <!--判断一级菜单标题是否存在-->
     <select id="hasFirstMenusTitle" parameterType="java.lang.String" resultType="boolean">
@@ -171,6 +180,5 @@
         WHERE second_first_id = #{ebaySecondMenus.secondFirstId}) t
         WHERE t.second_title = #{ebaySecondMenus.secondTitle}]]>
     </select>
-
 
 </mapper>

@@ -20,4 +20,18 @@ public interface ArticleDao {
      */
     String queryHtmlInfoBySecondId(@Param("secondId") int secondId);
 
+    /**
+     * 根据用户输入的关键字查询
+     * @param keyword
+     * @return
+     */
+    List<EbaySecondMenus> queryKeyWords(@Param("keyword") String keyword);
+
+    /**
+     * 查询根据关键词查询的条数，用于分页查询
+     * @param keyword
+     * @return
+     */
+    int countByKeyword(@Param("keyword") String keyword);
+
 }

@@ -14,4 +14,20 @@ public interface ArticleService {
      * @return
      */
     String queryHtmlBySecondId(int secondId);
+
+    /**
+     * 用户根据关键字查询内容
+     *
+     * @param keyword
+     * @return
+     */
+    List<EbaySecondMenus> queryKeyWords(String keyword);
+
+    /**
+     * 查询根据关键词查询的条数，用于分页查询
+     *
+     * @param keyword
+     * @return
+     */
+    int countByKeyword(String keyword);
 }

@@ -1,4 +1,6 @@
 package com.connext.ebayhelpcenter.util;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -6,6 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 /**通过此注解声明此类为一个全局异常处理类型*/
 @ControllerAdvice
 public class ControllerExceptionHandler {
+	private static Logger log = LoggerFactory.getLogger(ControllerExceptionHandler.class);
 	/**当spring发现系统出现异常了,且异常的
 	 * 类型为ServiceException类型,此时就会
 	 * 回调此方法,并将异常值传递给这个方法,
@@ -17,6 +20,7 @@ public class ControllerExceptionHandler {
 	public JsonResult handleServiceException(
 			   ServiceException e){
 		e.printStackTrace();
+		log.error("error info:{}",e.getMessage());
 		//将异常封装到JsonResult
 		return new JsonResult(e);
 		//this.state=ERROR;
