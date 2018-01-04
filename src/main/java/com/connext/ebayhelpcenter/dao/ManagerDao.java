@@ -184,4 +184,12 @@ public interface ManagerDao {
      */
     Boolean hasSecondMenusTitle(@Param("ebaySecondMenus") EbaySecondMenus ebaySecondMenus);
 
+
+    /**
+     * 二级菜单标题的模糊查询
+     *  @param secondTitle
+     * @return
+     */
+    List<EbaySecondMenus> searchSecondByTitle(@Param("secondTitle") String secondTitle);
+
 }

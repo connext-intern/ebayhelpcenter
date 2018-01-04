@@ -1,6 +1,7 @@
 package com.connext.ebayhelpcenter.controller;
 
 
+import com.alibaba.fastjson.JSON;
 import com.connext.ebayhelpcenter.model.EbayFirstMenus;
 import com.connext.ebayhelpcenter.model.EbaySecondMenus;
 import com.connext.ebayhelpcenter.service.ManagerService;
@@ -190,10 +191,11 @@ public class ManagerController {
      */
     @RequestMapping("/listSecondTitle/{firstId}")
     @ResponseBody
-    public List<EbaySecondMenus> listSecondTitle(@PathVariable("firstId") Integer firstId, HttpServletResponse response) {
+
+    public JsonResult listSecondTitle(@PathVariable("firstId") Integer firstId,HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", "*");
         List<EbaySecondMenus> list = managerService.findTitleById(firstId);
-        return list;
+        return new JsonResult(list);
     }
 
     /**
@@ -201,10 +203,11 @@ public class ManagerController {
      */
     @RequestMapping(value = "listSecondContent", method = RequestMethod.POST)
     @ResponseBody
-    public EbaySecondMenus listSecondContent(int id, HttpServletResponse response) {
+        public JsonResult listSecondContent(int id,HttpServletResponse response) {
+
         response.setHeader("Access-Control-Allow-Origin", "*");
         EbaySecondMenus list = managerService.findContentById(id);
-        return list;
+        return new JsonResult(list);
     }
 
     /**
@@ -212,19 +215,22 @@ public class ManagerController {
      */
     @RequestMapping(value = "updateSecond", method = RequestMethod.POST)
     @ResponseBody
-    public String updateSecond(Integer id, String title, String content, String html, HttpServletResponse response) {
+    public JsonResult updateSecond(Integer id, String title, String content, String html, HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", "*");
-        if (title != null) {
             managerService.updateSecondTitle(id, title);
-        }
-        if (content != null) {
             managerService.updateSecondContent(id, content);
-        }
-        if (html != null) {
             managerService.updateSecondHtml(id, html);
-        }
-
-        return "success to update";
+        return new JsonResult();
     }
 
+    /**
+     * 二级菜单标题的模糊查询
+     */
+    @RequestMapping(value = "searchSecondByTitle", method = RequestMethod.POST)
+    @ResponseBody
+    public JsonResult searchSecondByTitle(String secondTitle,HttpServletResponse response){
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        List<EbaySecondMenus> title=managerService.searchSecondByTitle(secondTitle);
+        return new JsonResult(title);
+    }
 }

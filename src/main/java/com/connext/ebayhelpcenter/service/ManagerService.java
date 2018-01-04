@@ -115,7 +115,13 @@ public interface ManagerService {
     /**
      * 通过id编辑二级菜单的排序号
      */
-    void updateSecondSerial(Integer id, Integer second_serial);
+    void updateSecondSerial(Integer id,Integer second_serial);
 
+    /**
+     *
+     *二级菜单标题的模糊查询
+     *
+     */
+    List<EbaySecondMenus> searchSecondByTitle(String secondTitle);
 
 }

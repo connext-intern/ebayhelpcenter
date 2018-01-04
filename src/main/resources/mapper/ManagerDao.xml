@@ -172,5 +172,10 @@
         WHERE t.second_title = #{ebaySecondMenus.secondTitle}]]>
     </select>
 
+    <!--二级菜单标题的模糊查询-->
+    <select id="searchSecondByTitle" resultType="com.connext.ebayhelpcenter.model.EbaySecondMenus">
+         SELECT * FROM ebay_second_menus WHERE second_title LIKE '%${secondTitle}%';
+    </select>
+
 
 </mapper>

@@ -19,7 +19,9 @@ import java.util.List;
 @Service
 public class ManagerServiceImpl implements ManagerService {
     private static Logger log = LoggerFactory.getLogger(ManagerServiceImpl.class);
-    private static final int FIRST_TITLE_MAX = 8;
+    private static final int FIRST_TITLE_MAX=8;
+    private static final int SECOND_TITLE_MAX=15;
+
 
     @Autowired
     private ManagerDao managerDao;
@@ -130,7 +132,8 @@ public class ManagerServiceImpl implements ManagerService {
         if (firstTitle.trim().isEmpty()) {
             throw new ServiceException("标题不能为空");
         }
-        if (firstTitle.length() > FIRST_TITLE_MAX) {
+        if (firstTitle.length() > FIRST_TITLE_MAX){
+
             throw new ServiceException("标题字数不能多于8");
         }
         if (managerDao.hasFirstMenusTitle(firstTitle)) {
@@ -154,8 +157,13 @@ public class ManagerServiceImpl implements ManagerService {
         if (secondTitle.trim().isEmpty()) {
             throw new ServiceException("标题不能为空");
         }
+
         if (secondTitle.length() > FIRST_TITLE_MAX) {
             throw new ServiceException("标题字数不能多于8");
+        }
+        if (secondTitle.length() > SECOND_TITLE_MAX){
+            throw new ServiceException("标题字数不能多于15");
+
         }
         if (!managerDao.hasFirstMenus(secondFirstId)) {
             throw new ServiceException("一级菜单不存在");
@@ -311,32 +319,59 @@ public class ManagerServiceImpl implements ManagerService {
      * 通过id编辑二级菜单的标题
      */
     @Override
-    public void updateSecondTitle(Integer id, String title) {
-        managerDao.updateSecondTitle(id, title);
+    public void updateSecondTitle(Integer id,String title) {
+        if(title.trim().isEmpty()){
+            throw new ServiceException("标题不能为空！");
+        }
+        if(title.length() > SECOND_TITLE_MAX){
+            throw new ServiceException("标题字数不能多于15");
+        }
+
+        managerDao.updateSecondTitle(id,title);
     }
 
     /**
      * 通过id编辑二级菜单的内容
      */
     @Override
-    public void updateSecondContent(Integer id, String content) {
-        managerDao.updateSecondContent(id, content);
+    public void updateSecondContent(Integer id,String content) {
+        if(content.trim().isEmpty()){
+            throw new ServiceException("内容不能为空！");
+        }
+        managerDao.updateSecondContent(id,content);
     }
 
     /**
      * 通过id编辑二级菜单的html
      */
     @Override
-    public void updateSecondHtml(Integer id, String html) {
-        managerDao.updateSecondHtml(id, html);
+    public void updateSecondHtml(Integer id,String html) {
+       if(html.trim().isEmpty()){
+           throw new ServiceException("html内容不能为空！");
+       }
+        managerDao.updateSecondHtml(id,html);
     }
 
     /**
      * 通过id编辑二级菜单的排序号
      */
     @Override
-    public void updateSecondSerial(Integer id, Integer second_serial) {
-        managerDao.updateSecondSerial(id, second_serial);
+    public void updateSecondSerial(Integer id,Integer second_serial) {
+       if(second_serial == null){
+           throw new ServiceException("二级菜单序号不能为空！");
+       }
+        managerDao.updateSecondSerial(id,second_serial);
+
+    }
+
+    /**
+     *
+     * 二级菜单标题的模糊查询
+     *
+     */
+    @Override
+    public List<EbaySecondMenus> searchSecondByTitle(String secondTitle){
+        return managerDao.searchSecondByTitle(secondTitle);
     }
 
 }
