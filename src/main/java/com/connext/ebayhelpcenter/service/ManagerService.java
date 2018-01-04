@@ -95,7 +95,7 @@ public interface ManagerService {
     /**
      * 通过first_id查询二级标题
      */
-    List<EbaySecondMenus> findTitleById(Integer id);
+    EbaySecondMenus findTitleById(Integer id);
 
     /**
      * 通过id编辑二级菜单的标题
