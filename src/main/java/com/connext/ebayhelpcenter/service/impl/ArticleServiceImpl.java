@@ -21,6 +21,24 @@ public class ArticleServiceImpl implements ArticleService {
     private ArticleDao articleDao;
 
     /**
+     * 根据二级id查找一级菜单标题
+     * @param secondId
+     * @return
+     */
+    @Override
+    public String queryFirstTitleBySecondId(int secondId) {
+        log.info("UserServiceImpl is queryFirstTitleBySecondId start...");
+        if(secondId == 0){
+            throw new ServiceException("secondId is null");
+        }
+        String firstTitle = this.articleDao.queryFirstTitleInfoBySecondId(secondId);
+        if(firstTitle == null){
+            throw new ServiceException(String.format("secondId:{},firstTitle is null",secondId));
+        }
+        return firstTitle;
+    }
+
+    /**
      * 根据二级菜单id查找正文内容
      * @param secondId
      * @return
@@ -33,7 +51,7 @@ public class ArticleServiceImpl implements ArticleService {
         }
         String html = this.articleDao.queryHtmlInfoBySecondId(secondId);
         if(html == null){
-            throw new ServiceException("html is null");
+            throw new ServiceException(String.format("secondId:{},html is null",secondId));
         }
         return html;
     }

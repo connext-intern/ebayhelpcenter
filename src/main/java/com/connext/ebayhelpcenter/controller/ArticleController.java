@@ -119,7 +119,12 @@ public class ArticleController {
     public JsonResult queryContent(int secondId, HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", "*");
         String html = this.articleService.queryHtmlBySecondId(secondId);
-        log.info("secondId:{},html-->{}",secondId,html);
-        return new JsonResult(html);
+        String firstTitle = this.articleService.queryFirstTitleBySecondId(secondId);
+        log.info("secondId:{},html-->{},firstTitle-->{}",secondId,html,firstTitle);
+
+        JSONObject json = new JSONObject();
+        json.put("html",html);
+        json.put("firstTitle",firstTitle);
+        return new JsonResult(json);
     }
 }

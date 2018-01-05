@@ -14,7 +14,6 @@ public interface ManagerService {
      */
     List<EbayFirstMenus> listAllTitle();
 
-
     /**
      * 删除一级标题
      *
@@ -95,7 +94,7 @@ public interface ManagerService {
     /**
      * 通过first_id查询二级标题
      */
-    EbaySecondMenus findTitleById(Integer id);
+    List<EbaySecondMenus> findTitleById(Integer id);
 
     /**
      * 通过id编辑二级菜单的标题

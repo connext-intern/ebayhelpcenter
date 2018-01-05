@@ -1,6 +1,7 @@
 package com.connext.ebayhelpcenter.controller;
 
 
+import com.alibaba.fastjson.JSON;
 import com.connext.ebayhelpcenter.model.EbayFirstMenus;
 import com.connext.ebayhelpcenter.model.EbaySecondMenus;
 import com.connext.ebayhelpcenter.service.ManagerService;
@@ -18,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- * ¹ÜÀíÔ±¶Ô²Ëµ¥µÄÔöÉ¾¸Ä²é²Ù×÷Àà
+ * ç®¡ç†å‘˜å¯¹èœå•çš„å¢åˆ æ”¹æŸ¥æ“ä½œç±»
  */
 @Controller
 @RequestMapping("/manager")
@@ -29,18 +30,18 @@ public class ManagerController {
     private ManagerService managerService;
 
     /**
-     * @return ½«¶ş¼¶²Ëµ¥·â×°µ½Ò»¼¶²Ëµ¥ÖĞ£¬·µ»ØÒ»¼¶²Ëµ¥µÄlist
+     * @return å°†äºŒçº§èœå•å°è£…åˆ°ä¸€çº§èœå•ä¸­ï¼Œè¿”å›ä¸€çº§èœå•çš„list
      */
     @RequestMapping(value = "/listAllMenus", method = RequestMethod.POST)
     @ResponseBody
-    public List<EbayFirstMenus> listAllTitle(HttpServletResponse response) {
-        response.setHeader("Access-Control-Allow-Origin", "*");//½â¾öÔ¶¶Ë¿çÓò·ÃÎÊ²»ÔÊĞí
+    public JsonResult listAllTitle(HttpServletResponse response) {
+        response.setHeader("Access-Control-Allow-Origin", "*");//è§£å†³è¿œç«¯è·¨åŸŸè®¿é—®ä¸å…è®¸
         List<EbayFirstMenus> list = managerService.listAllTitle();
-        return list;
+        return new JsonResult(list);
     }
 
     /**
-     * É¾³ıÒ»¼¶±êÌâ£¬ĞèÅĞ¶ÏÊÇ·ñ´æÔÚ¶ş¼¶±êÌâ
+     * åˆ é™¤ä¸€çº§æ ‡é¢˜ï¼Œéœ€åˆ¤æ–­æ˜¯å¦å­˜åœ¨äºŒçº§æ ‡é¢˜
      * @param firstId
      * @return
      */
@@ -50,7 +51,7 @@ public class ManagerController {
         response.setHeader("Access-Control-Allow-Origin", "*");
         log.info("ManagerController is deleteFirstMenu start...");
 
-        //É¾³ıÒ»¼¶²Ëµ¥
+        //åˆ é™¤ä¸€çº§èœå•
         Boolean  isDeleteFirstMenu = this.managerService.deleteFirstMenu(firstId);
         if(!isDeleteFirstMenu){
             log.info("firstId:{},deleteFirstMenu fail",firstId);
@@ -59,7 +60,7 @@ public class ManagerController {
     }
 
     /**
-     * É¾³ı¶ş¼¶±êÌâ¶ÔÏó
+     * åˆ é™¤äºŒçº§æ ‡é¢˜å¯¹è±¡
      * @param secondId
      * @return
      */
@@ -78,8 +79,8 @@ public class ManagerController {
     }
 
     /**
-     * ĞÂÔöÒ»¼¶²Ëµ¥
-     * @param firstTitle ²Ëµ¥±êÌâ
+     * æ–°å¢ä¸€çº§èœå•
+     * @param firstTitle èœå•æ ‡é¢˜
      * @return
      */
     @RequestMapping(value = "saveFirstMenus", method = RequestMethod.POST)
@@ -91,11 +92,11 @@ public class ManagerController {
     }
 
     /**
-     * ĞÂÔö¶ş¼¶±êÌâ¼°ÆäÄÚÈİ
-     * @param secondTitle ²Ëµ¥±êÌâ
-     * @param content ´¿ÎÄ±¾ÄÚÈİ
-     * @param html ÄÚÈİµÄhtml
-     * @param secondFirstId ¶ÔÓ¦Ò»¼¶²Ëµ¥µÄ±àºÅ
+     * æ–°å¢äºŒçº§æ ‡é¢˜åŠå…¶å†…å®¹
+     * @param secondTitle èœå•æ ‡é¢˜
+     * @param content çº¯æ–‡æœ¬å†…å®¹
+     * @param html å†…å®¹çš„html
+     * @param secondFirstId å¯¹åº”ä¸€çº§èœå•çš„ç¼–å·
      * @return
      */
     @RequestMapping(value = "saveSecondMenus", method = RequestMethod.POST)
@@ -108,35 +109,37 @@ public class ManagerController {
 
 
     /**
-     * ¸øÒ»¼¶²Ëµ¥½øĞĞÅÅĞò
+     * ç»™ä¸€çº§èœå•è¿›è¡Œæ’åº
      * ByZach Zhang
      * @param firstSerials
      * @return
      */
     @RequestMapping("/sortFirstTitle/{firstSerials}")
     @ResponseBody
-    public String sortFirstTitle(@PathVariable("firstSerials") Integer[] firstSerials){
-        log.info("´«½øÀ´µÄĞÂĞòÁĞÊÇ£º{}",firstSerials);
+    public JsonResult sortFirstTitle(@PathVariable("firstSerials") Integer[] firstSerials,HttpServletResponse response){
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        log.info("ä¼ è¿›æ¥çš„æ–°åºåˆ—æ˜¯ï¼š{}",firstSerials);
         managerService.sortFirstTitle(firstSerials);
-        return "success";
+        return new JsonResult();
     }
     /**
-     * ¸ø¶ş¼¶²Ëµ¥½øĞĞÅÅĞò
+     * ç»™äºŒçº§èœå•è¿›è¡Œæ’åº
      * ByZach Zhang
      * @param secondSerials,firstId
      * @return
      */
     @RequestMapping("/sortSecondTitle/{firstId}/{secondSerials}")
     @ResponseBody
-    public String sortSecondTitle(@PathVariable("firstId") Integer firstId,@PathVariable("secondSerials") Integer[] secondSerials){
-        log.info("´«½øÀ´µÄ¶ş¼¶²Ëµ¥ÃÇµÄÒ»¼¶²Ëµ¥idºÍĞÂµÄĞòÁĞ·Ö±ğÊÇ£º{},{}",firstId,secondSerials);
+    public JsonResult sortSecondTitle(@PathVariable("firstId") Integer firstId,@PathVariable("secondSerials") Integer[] secondSerials,HttpServletResponse response){
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        log.info("ä¼ è¿›æ¥çš„äºŒçº§èœå•ä»¬çš„ä¸€çº§èœå•idå’Œæ–°çš„åºåˆ—åˆ†åˆ«æ˜¯ï¼š{},{}",firstId,secondSerials);
         managerService.sortSecondTitle(firstId,secondSerials);
-        return "success";
+        return new JsonResult();
     }
 
 
     /**
-     * ĞŞ¸ÄÒ»¼¶²Ëµ¥±êÌâ zhangyang
+     * ä¿®æ”¹ä¸€çº§èœå•æ ‡é¢˜ zhangyang
      */
     @RequestMapping(value = "/updateFirst",method = RequestMethod.POST)
     @ResponseBody
@@ -148,49 +151,61 @@ public class ManagerController {
 
 
     /**
-     * ²éÑ¯ËùÓĞÒ»¼¶²Ëµ¥±êÌâ
+     * æŸ¥è¯¢æ‰€æœ‰ä¸€çº§èœå•æ ‡é¢˜
      * @return
      */
-    @RequestMapping(value = "showAllFirst",method = RequestMethod.POST)
+    @RequestMapping(value = "/showAllFirst",method = RequestMethod.POST)
     @ResponseBody
-    public List<EbayFirstMenus> showAllFirst(HttpServletResponse response) {
+    public JsonResult showAllFirst(HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", "*");
         List<EbayFirstMenus> ebayFirstMenu = managerService.showAllFirst();
-        return ebayFirstMenu;
+        return new JsonResult(ebayFirstMenu);
     }
 
-
+    /**
+     * æ ¹æ®titleå…³é”®å­—æ¨¡ç³Šæœç´¢ä¸€çº§èœå•
+     *
+     * @param response
+     * @param firstTitle
+     * @return
+     */
+    @RequestMapping(value = "searchFirstByTitle", method = RequestMethod.POST)
+    @ResponseBody
+    public JsonResult searchFirstByTitle(HttpServletResponse response, String firstTitle) {
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        List<EbayFirstMenus> ebayFirstMenu = managerService.searchFirstByTitle(firstTitle);
+        return new JsonResult(ebayFirstMenu);
+    }
 
     /**
-     *  Í¨¹ıÒ»¼¶²Ëµ¥µÄid£¨second_id£©²éÑ¯¶ş¼¶²Ëµ¥¶ÔÓ¦µÄ±êÌâ
+     *  é€šè¿‡ä¸€çº§èœå•çš„idï¼ˆsecond_idï¼‰æŸ¥è¯¢äºŒçº§èœå•å¯¹åº”çš„æ ‡é¢˜
      */
-
     @RequestMapping("/listSecondTitle/{firstId}")
     @ResponseBody
-    public EbaySecondMenus listSecondTitle(@PathVariable("firstId") Integer firstId, HttpServletResponse response) {
+    public JsonResult listSecondTitle(@PathVariable("firstId") Integer firstId, HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", "*");
-        EbaySecondMenus list = managerService.findTitleById(firstId);
+        List<EbaySecondMenus> list = managerService.findTitleById(firstId);
 
-        return list;
+        return new JsonResult(list);
     }
 
     /**
-     *  Í¨¹ı¶ş¼¶²Ëµ¥µÄid£¨second_id£©²éÑ¯¶ş¼¶²Ëµ¥¶ÔÓ¦µÄÄÚÈİ
+     *  é€šè¿‡äºŒçº§èœå•çš„idï¼ˆsecond_idï¼‰æŸ¥è¯¢äºŒçº§èœå•å¯¹åº”çš„å†…å®¹
      */
-    @RequestMapping(value = "listSecondContent",method = RequestMethod.POST)
+    @RequestMapping(value = "/listSecondContent",method = RequestMethod.POST)
     @ResponseBody
-    public EbaySecondMenus listSecondContent(int id, HttpServletResponse response) {
+    public JsonResult listSecondContent(int id, HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", "*");
-        EbaySecondMenus list = managerService.findContentById(id);
-        return list;
+        EbaySecondMenus ebaySecondMenus = managerService.findContentById(id);
+        return new JsonResult(ebaySecondMenus);
     }
 
     /**
-     * ĞŞ¸Ä¶ş¼¶²Ëµ¥±êÌâºÍÄÚÈİ
+     * ä¿®æ”¹äºŒçº§èœå•æ ‡é¢˜å’Œå†…å®¹
      */
-    @RequestMapping(value = "updateSecond", method = RequestMethod.POST)
+    @RequestMapping(value = "/updateSecond", method = RequestMethod.POST)
     @ResponseBody
-    public String updateSecond(Integer id, String title, String content, String html, HttpServletResponse response) {
+    public JsonResult updateSecond(Integer id, String title, String content, String html, HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", "*");
         if (title != null) {
             managerService.updateSecondTitle(id, title);
@@ -201,8 +216,18 @@ public class ManagerController {
         if (html != null) {
             managerService.updateSecondHtml(id, html);
         }
+        return new JsonResult();
+    }
 
-        return "success to update";
+    /**
+     * äºŒçº§èœå•æ ‡é¢˜çš„æ¨¡ç³ŠæŸ¥è¯¢
+     */
+    @RequestMapping(value = "/searchSecondByTitle", method = RequestMethod.POST)
+    @ResponseBody
+    public JsonResult searchSecondByTitle(String secondTitle,HttpServletResponse response){
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        List<EbaySecondMenus> title=managerService.searchSecondByTitle(secondTitle);
+        return new JsonResult(title);
     }
 
 }

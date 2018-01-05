@@ -5,7 +5,12 @@
 <mapper namespace="com.connext.ebayhelpcenter.dao.ArticleDao">
     <!-- 根据二级菜单id查找正文内容 -->
     <select id="queryHtmlInfoBySecondId" resultType="String">
-        SELECT html FROM ebay_second_menus WHERE second_id = #{secondId}
+        SELECT html FROM ebay_second_menus WHERE second_id = #{secondId};
+    </select>
+
+    <!-- 根据二级id查找一级菜单标题 -->
+    <select id="queryFirstTitleInfoBySecondId" resultType="String">
+        SELECT first_title FROM ebay_first_menus,ebay_second_menus WHERE second_id = #{secondId} AND second_first_id = first_id;
     </select>
 
     <!--根据关键词查询有关的标题以及文本列表-->

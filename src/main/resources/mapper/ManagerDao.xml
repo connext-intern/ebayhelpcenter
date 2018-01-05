@@ -35,7 +35,7 @@
 
     <!-- 查出所有的一级和二级菜单 -->
     <select id="listAllTitle" resultMap="ebayFirstMenus">
-        SELECT f.first_id,s.second_id,f.first_title,s.second_title
+        SELECT f.first_id,s.second_id,f.first_title,s.second_title,f.first_serial
         FROM ebay_first_menus f left join ebay_second_menus s
         ON  f.first_id=s.second_first_id
         ORDER BY f.first_serial,s.second_serial
@@ -128,6 +128,7 @@
         UPDATE ebay_first_menus SET first_title =#{firstTitle},first_serial=#{firstSerial}
         WHERE first_id = #{firstId}
     </update>
+
     <!-- 查找一级标题中的id  zhangyang-->
     <select id="findFirstId" resultType="com.connext.ebayhelpcenter.model.EbayFirstMenus">
         SELECT * FROM ebay_first_menus

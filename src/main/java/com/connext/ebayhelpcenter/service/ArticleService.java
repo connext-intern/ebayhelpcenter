@@ -30,4 +30,11 @@ public interface ArticleService {
      * @return
      */
     int countByKeyword(String keyword);
+
+    /**
+     * 根据二级id查找一级菜单标题
+     * @param secondId
+     * @return
+     */
+    String queryFirstTitleBySecondId(int secondId);
 }

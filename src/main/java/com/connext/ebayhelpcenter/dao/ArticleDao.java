@@ -34,4 +34,10 @@ public interface ArticleDao {
      */
     int countByKeyword(@Param("keyword") String keyword);
 
+    /**
+     * 根据二级id查找一级菜单标题
+     * @param secondId
+     * @return
+     */
+    String queryFirstTitleInfoBySecondId(@Param("secondId") int secondId);
 }
