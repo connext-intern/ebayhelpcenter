@@ -75,11 +75,11 @@ public class ArticleController {
         log.info("keyword-->" + keyword);
         PageHelper.startPage(1, 10);
         List<EbaySecondMenus> list = this.articleService.queryKeyWords(keyword);
-
         int countByKeyword = this.articleService.countByKeyword(keyword);
         log.info("countByKeyword-->" + countByKeyword);
+        log.info("size-->" + list.size());
         for (EbaySecondMenus e : list) {
-            log.info(e.getContent());
+            log.info(e.getSecondTitle());
         }
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("list", list);
@@ -121,7 +121,6 @@ public class ArticleController {
         String html = this.articleService.queryHtmlBySecondId(secondId);
         String firstTitle = this.articleService.queryFirstTitleBySecondId(secondId);
         log.info("secondId:{},html-->{},firstTitle-->{}",secondId,html,firstTitle);
-
         JSONObject json = new JSONObject();
         json.put("html",html);
         json.put("firstTitle",firstTitle);

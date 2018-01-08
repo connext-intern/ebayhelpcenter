@@ -18,7 +18,6 @@
         select second_title,content,second_id
         from ebay_second_menus
         where content like '%${keyword}%'OR second_title like '%${keyword}%'
-        ORDER BY second_serial
     </select>
 
     <!--查询包含关键词的数量-->
