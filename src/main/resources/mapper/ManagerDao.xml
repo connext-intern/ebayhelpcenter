@@ -85,7 +85,7 @@
         INSERT INTO ebay_second_menus(second_serial,second_title,content,html,second_first_id)
         VALUES
         ((SELECT max_serial FROM
-        (SELECT MAX(second_serial) AS max_serial FROM ebay_second_menus ) t2)+1,
+        (SELECT MAX(second_serial) AS max_serial FROM ebay_second_menus WHERE second_first_id = #{ebaySecondMenus.secondFirstId}) t2)+1,
         #{ebaySecondMenus.secondTitle},#{ebaySecondMenus.content},#{ebaySecondMenus.html},
         #{ebaySecondMenus.secondFirstId});
     </update>
