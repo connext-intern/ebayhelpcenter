@@ -17,7 +17,15 @@
     <select id="queryKeyWords" resultType="com.connext.ebayhelpcenter.model.EbaySecondMenus">
         select second_title,content,second_id
         from ebay_second_menus
-        where content like '%${keyword}%'OR second_title like '%${keyword}%'
+        where content like '%${keyword}%'and second_title like '%${keyword}%'
+        UNION
+        select second_title,content,second_id
+        from ebay_second_menus
+        where second_title like '%${keyword}%'AND content not like '%${keyword}%'
+        UNION
+        select second_title,content,second_id
+        from ebay_second_menus
+        where content like '%${keyword}%'and second_title not like '%${keyword}%'
     </select>
 
     <!--查询包含关键词的数量-->

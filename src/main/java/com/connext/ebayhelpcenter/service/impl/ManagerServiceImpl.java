@@ -153,6 +153,7 @@ public class ManagerServiceImpl implements ManagerService {
         if (secondTitle.trim().isEmpty()) {
             throw new ServiceException("标题不能为空");
         }
+
         if (secondTitle.length() > SECOND_TITLE_MAX) {
             throw new ServiceException("标题字数不能多于15");
         }
