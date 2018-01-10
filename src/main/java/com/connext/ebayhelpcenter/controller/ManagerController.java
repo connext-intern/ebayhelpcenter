@@ -103,6 +103,7 @@ public class ManagerController {
     @ResponseBody
     public JsonResult saveSecondMenus(HttpServletResponse response, String secondTitle, String content, String html, int secondFirstId) {
         response.setHeader("Access-Control-Allow-Origin", "*");
+        content = content.replaceAll("<!--(.|[\r\n])*?-->","");
         managerService.saveSecondMenus(secondTitle, content, html, secondFirstId);
         return new JsonResult();
     }
@@ -211,6 +212,7 @@ public class ManagerController {
             managerService.updateSecondTitle(id, title);
         }
         if (content != null) {
+            content = content.replaceAll("<!--(.|[\r\n])*?-->","");
             managerService.updateSecondContent(id, content);
         }
         if (html != null) {
