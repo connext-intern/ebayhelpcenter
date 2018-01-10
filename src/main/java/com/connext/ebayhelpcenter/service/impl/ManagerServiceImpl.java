@@ -154,12 +154,8 @@ public class ManagerServiceImpl implements ManagerService {
             throw new ServiceException("标题不能为空");
         }
 
-        if (secondTitle.length() > FIRST_TITLE_MAX) {
-            throw new ServiceException("标题字数不能多于8");
-        }
         if (secondTitle.length() > SECOND_TITLE_MAX) {
             throw new ServiceException("标题字数不能多于15");
-
         }
         if (!managerDao.hasFirstMenus(secondFirstId)) {
             throw new ServiceException("一级菜单不存在");
